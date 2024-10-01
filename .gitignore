@@ -1,0 +1,12 @@
+evals/logs
+evals/logs-run-test5
+evals/logs-run-test6
+evals/logs-run-test7
+/gemma-2-2b-it
+evals/__pycache__
+evals/wmdp-fast.py
+evals/__pycache__/arc.cpython-311.pyc
+evals/__pycache__/gpqa.cpython-311.pyc
+evals/__pycache__/wmdp-fast.cpython-311.pyc
+evals/__pycache__/wmdp.cpython-311.pyc
+*.pyc
