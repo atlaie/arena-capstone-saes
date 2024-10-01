@@ -1,4 +1,4 @@
-#%%
+# %%
 
 from sae_lens import SAE
 import torch as t
@@ -6,36 +6,39 @@ from transformer_lens import HookedTransformer
 
 device = t.device("cuda" if t.cuda.is_available() else "cpu")
 
-model = HookedTransformer.from_pretrained("google/gemma-2-2b", device = device, local_files_only = True)
+model = HookedTransformer.from_pretrained("google/gemma-2-2b-it", device = device, local_files_only = True)
 
+#%%
 sae, cfg_dict, sparsity = SAE.from_pretrained(
     release = "gemma-scope-2b-pt-res-canonical",
     sae_id = "layer_25/width_16k/canonical",
     device = device
 )
+
 #%%
 
-# import os
-# from unsloth import FastLanguageModel, is_bfloat16_supported
+import os
+from unsloth import FastLanguageModel, is_bfloat16_supported
+import torch as t
+from transformer_lens import HookedTransformer
+
+use_bfloat16 = is_bfloat16_supported()
+max_seq_length = 2048  # Adjust as needed
+dtype = None  # Set to None for auto detection of device capabilities
+load_in_4bit = True  # Use 4-bit quantization
+
+#os.environ['HF_HUB_HOME'] = './gemma-2-2b-lora_model'
+# model = transformer_lens.HookedTransformer.from_pretrained('adapter_model')
 
 
-# use_bfloat16 = is_bfloat16_supported()
-# max_seq_length = 2048  # Adjust as needed
-# dtype = None  # Set to None for auto detection of device capabilities
-# load_in_4bit = True  # Use 4-bit quantization
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name="google/gemma-2-2b",
+    max_seq_length=max_seq_length,
+    dtype=t.float16 if not use_bfloat16 else t.bfloat16,  # Set correct precision
+    load_in_4bit=load_in_4bit
+)
 
-# #os.environ['HF_HUB_HOME'] = './gemma-2-2b-lora_model'
-# # model = transformer_lens.HookedTransformer.from_pretrained('adapter_model')
-
-
-# model, tokenizer = FastLanguageModel.from_pretrained(
-#     model_name="",
-#     max_seq_length=max_seq_length,
-#     dtype=t.float16 if not use_bfloat16 else t.bfloat16,  # Set correct precision
-#     load_in_4bit=load_in_4bit,
-# )
-
-# hooked_model = HookedTransformer.from_pretrained("gemma-2-2b", hf_model=model)
+hooked_model = HookedTransformer.from_pretrained("gemma-2-2b", hf_model=model)
 
 #%%
 import plotly.express as px
@@ -65,7 +68,7 @@ sae.eval()  # prevents error if we're expecting a dead neuron mask for who grads
 
 with t.no_grad():
     # activation store can give us tokens.
-    batch_tokens = token_dataset[:5]["tokens"]
+    batch_tokens = token_dataset[:6]["tokens"]
     _, cache = model.run_with_cache(batch_tokens, 
     names_filter = sae.cfg.hook_name,
     prepend_bos=True)
@@ -81,8 +84,6 @@ with t.no_grad():
     l25 = (feature_acts[:, 1:] > 0).float().sum(-1).detach()
     print("average l25", l25.mean().item())
     px.histogram(l25.flatten().cpu().numpy()).show()
-
-#%%
 
 
 #%%
