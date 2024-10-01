@@ -35,7 +35,7 @@ def gpqa_diamond(cot=True):
         dataset=csv_dataset(
             csv_file="https://openaipublic.blob.core.windows.net/simple-evals/gpqa_diamond.csv",
             sample_fields=record_to_sample,
-        )[:5],
+        ),
         solver=[
             multiple_choice(shuffle=True),
         ],

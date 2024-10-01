@@ -32,8 +32,16 @@ def wmdp_task(dataset_name):
 
 
 @task
-def wmdp():
+def wmdp_bio():
     return wmdp_task("wmdp-bio")
+
+@task
+def wmdp_chem():
+    return wmdp_task("wmdp-chem")
+
+@task
+def wmdp_cyber():
+    return wmdp_task("wmdp-cyber")
 
 
 def record_to_sample(record):
