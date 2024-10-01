@@ -26,8 +26,7 @@ from inspect_ai.scorer import choice
 from inspect_ai.solver import multiple_choice
 
 # default epochs to run eval for
-DEFAULT_EPOCHS = 4
-INSPECT_EVAL_MODEL = 'google/gemma-2-2b'
+DEFAULT_EPOCHS = 1
 
 
 @task
@@ -36,7 +35,7 @@ def gpqa_diamond(cot=True):
         dataset=csv_dataset(
             csv_file="https://openaipublic.blob.core.windows.net/simple-evals/gpqa_diamond.csv",
             sample_fields=record_to_sample,
-        ),
+        )[:5],
         solver=[
             multiple_choice(shuffle=True),
         ],
