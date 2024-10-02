@@ -108,8 +108,8 @@ subset_dataset = tokenized_dataset_train.select(range(subset_size))
 # Create DataLoader with the subset
 batch_size = 32  # Adjust based on your GPU memory
 train_dataloader = DataLoader(
-    subset_dataset,
-    #tokenized_dataset_train,
+    #subset_dataset,
+    tokenized_dataset_train,
     batch_size=batch_size,
     shuffle=False,
     collate_fn=data_collator
@@ -238,8 +238,8 @@ plt.ylabel('$\sigma(A)/\sqrt{N_{SAE}}$')
 plt.axvline(20, ls = '--', lw = 1, color = 'black')
 sns.despine()
 plt.tight_layout()
-plt.xlim([-5, 105])
-plt.ylim([-1, 20])
+#plt.xlim([-5, 105])
+#plt.ylim([-1, 20])
 #plt.savefig('results/LatentStd_ZoomedIn_01102024.svg', transparent = True)
 
 #%%
@@ -328,7 +328,7 @@ plt.yticks(fontsize = 14)
 plt.xticks(fontsize = 14)
 sns.despine()
 plt.tight_layout()
-plt.savefig('results/Ablated_Neurons_Weights_01102024.svg', transparent = True)
+#plt.savefig('results/Ablated_Neurons_Weights_01102024.svg', transparent = True)
 #%%
 weights_ablated.shape
 #%%
