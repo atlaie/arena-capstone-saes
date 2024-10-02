@@ -35,7 +35,7 @@ dataset = hf_dataset(
             sample_fields=record_to_sample,
         )
 
-dataset = dataset[0:10]
+dataset = dataset[0:1000]
 
 # template=
 #              """
