@@ -22,11 +22,6 @@ sae, cfg_dict, sparsity = SAE.from_pretrained(
     sae_id="layer_25/width_16k/canonical",
     device=device
 )
-#%%
-
-
-
-
 
 #%%
 from torch.utils.data import DataLoader
@@ -105,13 +100,13 @@ data_collator = DataCollatorForSeq2Seq(
 )
 
 # # Define the subset size
-# subset_size = 160  # Adjust this number as needed
+# subset_size = 32  # Adjust this number as needed
 
 # # Select a subset of the dataset
 # subset_dataset = tokenized_dataset_train.select(range(subset_size))
 
 # Create DataLoader with the subset
-batch_size = 32  # Adjust based on your GPU memory
+batch_size = 16  # Adjust based on your GPU memory
 train_dataloader = DataLoader(
     #subset_dataset,
     tokenized_dataset_train,
@@ -120,12 +115,40 @@ train_dataloader = DataLoader(
     collate_fn=data_collator
 )
 
+def compute_errors(sae_in, feature_acts):
+    # Flatten inputs and compute the mask for active features
+    feature_acts = feature_acts.flatten(0,1)
+    fired_mask = feature_acts.sum(dim=-1) > 0
+
+    # Perform reconstruction
+    reconstruction = feature_acts[fired_mask] @ sae.W_dec
+
+    # Compute the reconstruction error (Sum of Squared Residuals, SSR)
+    squared_residuals = (reconstruction - sae_in.flatten(0,1)[fired_mask]) ** 2
+    ssr = squared_residuals.sum()
+
+    # Compute the total variance of the original input (Total Sum of Squares, TSS)
+    sae_in_flattened = sae_in.flatten(0,1)[fired_mask]
+    mean_sae_in = sae_in_flattened.mean(dim=0)
+    tss = ((sae_in_flattened - mean_sae_in) ** 2).sum()
+
+    # Compute R^2
+    r2 = 1 - ssr / tss
+
+    # Return the mean squared reconstruction error and R^2
+    return squared_residuals.mean(), r2
+
+
+#%%
+
 # Function to compute feature rank sums
 def compute_feature_ranks_per_sample(model, sae, dataloader, device):
     model.eval()
     sae.eval()
     num_features = sae.cfg.d_sae
     all_ranks = []
+    all_rec_errors = []
+    all_r2 = []
     total_samples = 0
 
     for batch in tqdm(dataloader, desc="Processing"):
@@ -143,10 +166,11 @@ def compute_feature_ranks_per_sample(model, sae, dataloader, device):
             )
 
             activations = cache[sae.cfg.hook_name]  # Shape: [batch_size, seq_len, hidden_size]
-
+            
             # Encode activations using SAE
             feature_acts = sae.encode(activations)  # Shape: [batch_size, seq_len, num_features]
-            reconstruction = feature_acts[fired_mask][:, feature_list] @ sae.W_dec[feature_list]
+            
+            reconstruction_error, r2 = compute_errors(activations, feature_acts)
 
             # Aggregate activations over positions (e.g., take max over seq_len)
             max_feature_acts = feature_acts.max(dim=1).values  # Shape: [batch_size, num_features]
@@ -166,23 +190,33 @@ def compute_feature_ranks_per_sample(model, sae, dataloader, device):
             # Move ranks to CPU and append to list
             ranks_cpu = ranks.cpu()
             all_ranks.append(ranks_cpu)
+            all_rec_errors.append(reconstruction_error)
+            all_r2.append(r2)
 
             # Clean up to free memory
-            del cache, feature_acts, activations
+            del cache, feature_acts, activations, reconstruction_error, r2
 
     # Concatenate all ranks along 0th dimension
     ranks_matrix = torch.cat(all_ranks, dim=0)  # Shape: [n_samples, num_features]
+    rec_errors = torch.tensor(all_rec_errors)  # Shape: [n_samples]
+    r2s = torch.tensor(all_r2)  # Shape: [n_samples]
 
-    return ranks_matrix
+    return ranks_matrix, rec_errors, r2s
 
 
 # Run computation
-feature_ranking = compute_feature_ranks_per_sample(
+feature_ranking, rec_errors, r2s = compute_feature_ranks_per_sample(
     model=model,
     sae=sae,
     dataloader=train_dataloader,
     device=device
 )
+
+#%%
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.stripplot(data = r2s)
 #%%
 import seaborn as sns
 import cmcrameri as cmc

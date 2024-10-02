@@ -35,7 +35,8 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 model = FastLanguageModel.get_peft_model(
     model,
     r=16,  # Number of LoRA ranks
-    target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    #target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    target_modules=["gate_proj", "up_proj", "down_proj"],
     lora_alpha=16,
     lora_dropout=0.0,  # Dropout for LoRA
     bias="none",       # Bias term configuration
@@ -44,7 +45,10 @@ model = FastLanguageModel.get_peft_model(
     use_rslora=False  # Rank stabilized LoRA off
 )
 
-print(model.named_modules)
+#print(model.named_modules)
+print(model.base_model.model.model.layers[-1].mlp)
+
+#%%
 
 # Step 3: Tokenize the Dataset
 def tokenize_function_with_choices(examples):
@@ -284,4 +288,16 @@ model.save_pretrained("gemma-2-2b-it_noLoRa")
 print(f"Training completed in {trainer_stats.metrics['train_runtime']} seconds.")
 # %%
 
-# Inference code remains the same
+from transformers import AutoModelForCausalLM
+
+model_base = AutoModelForCausalLM.from_pretrained('google/gemma-2-2b-it').to('cuda:0')
+
+#model_ft = AutoModelForCausalLM.from_pretrained('./gemma-2-2b-it-wmdp')
+
+#%%
+import torch as t
+
+
+
+#%%
+
