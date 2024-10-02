@@ -1,0 +1,1 @@
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fdcf1116140>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fdf70597010, execution_count=7 error_before_exec=None error_in_exec=None info=<ExecutionInfo object at 7fdf70594d30, raw_cell="#%%

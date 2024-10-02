@@ -11,15 +11,15 @@ from tqdm import tqdm
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load the model and tokenizer
-model = HookedTransformer.from_pretrained(
-    "google/gemma-2-2b-it", device=device, local_files_only=True
-)
-tokenizer = AutoTokenizer.from_pretrained('./google/gemma-2-2b-it')
+model = HookedTransformer.from_pretrained("google/gemma-2-2b-it", device=device)
+tokenizer = AutoTokenizer.from_pretrained('google/gemma-2-2b-it')
 
 # Load the SAE
 sae, cfg_dict, sparsity = SAE.from_pretrained(
-    release="gemma-scope-2b-pt-res-canonical",
-    sae_id="layer_25/width_16k/canonical",
+    #release="gemma-scope-2b-pt-res-canonical",
+    release="gemma-scope-2b-pt-mlp",
+    #sae_id="layer_25/width_16k/canonical",
+    sae_id="layer_25/width_16k/average_l0_277",
     device=device
 )
 
@@ -99,17 +99,17 @@ data_collator = DataCollatorForSeq2Seq(
     label_pad_token_id=-100
 )
 
-# # Define the subset size
-# subset_size = 32  # Adjust this number as needed
+# Define the subset size
+subset_size = 1024  # Adjust this number as needed
 
-# # Select a subset of the dataset
-# subset_dataset = tokenized_dataset_train.select(range(subset_size))
+# Select a subset of the dataset
+subset_dataset = tokenized_dataset_train.select(range(subset_size))
 
 # Create DataLoader with the subset
-batch_size = 16  # Adjust based on your GPU memory
+batch_size = 32  # Adjust based on your GPU memory
 train_dataloader = DataLoader(
-    #subset_dataset,
-    tokenized_dataset_train,
+    subset_dataset,
+    #tokenized_dataset_train,
     batch_size=batch_size,
     shuffle=False,
     collate_fn=data_collator
@@ -216,7 +216,8 @@ feature_ranking, rec_errors, r2s = compute_feature_ranks_per_sample(
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-sns.stripplot(data = r2s)
+sns.histplot(data = r2s, kde = True)
+plt.xlabel(r"$R_{SAE \rightarrow MLP}^2$")
 #%%
 import seaborn as sns
 import cmcrameri as cmc
@@ -227,7 +228,7 @@ sns.heatmap(f_rank, cmap = 'cmc.lapaz', cbar_kws={'label':'Activation-based Rank
 plt.xlabel('SAE latent #')
 plt.ylabel('Dataset sample #')
 plt.tight_layout()
-plt.savefig('results/LatentOrder_01102024.png', transparent = True, dpi = 200)
+#plt.savefig('results/LatentOrder_01102024.png', transparent = True, dpi = 200)
 #%%
 import matplotlib.pyplot as plt
 
@@ -239,7 +240,7 @@ sns.despine()
 plt.tight_layout()
 plt.xlim([-5, 105])
 plt.ylim([-1, 20])
-plt.savefig('results/LatentStd_ZoomedIn_01102024.svg', transparent = True)
+#plt.savefig('results/LatentStd_ZoomedIn_01102024.svg', transparent = True)
 
 #%%
 from tabulate import tabulate
@@ -266,7 +267,7 @@ for ii in range(3):
 #%%
 from transformers import AutoModelForCausalLM
 
-model_transformers = AutoModelForCausalLM.from_pretrained('./google/gemma-2-2b-it')
+model_transformers = AutoModelForCausalLM.from_pretrained('google/gemma-2-2b-it')
 
 #%%
 
@@ -302,7 +303,9 @@ def ablate_neurons_in_model(model, important_neurons):
 #%%
 weights_1 = model_transformers.model.layers[-1].mlp.down_proj.weight
 important_neurons = identify_neurons_from_sae(sae, idx_order, top_k = 20, percentile=99)
+important_neurons_random = np.random.choice(important_neurons.shape[0], size = important_neurons.shape[0], replace = False)
 model_ablated = ablate_neurons_in_model(model_transformers, important_neurons)
+model_ablated_random = ablate_neurons_in_model(model_transformers, important_neurons_random)
 weights_ablated = model_ablated.model.layers[-1].mlp.down_proj.weight
 #%%
 important_neurons.shape
@@ -341,8 +344,12 @@ plt.axvline(perc, color = 'black')
 plt.xlabel(r"Importance $(||W_{SAE\rightarrow Neuron}||_0)$")
 sns.despine()
 plt.tight_layout()
-plt.savefig('results/NeuronSAE_Importance_01102024.svg', transparent = True)
+#plt.savefig('results/NeuronSAE_Importance_01102024.svg', transparent = True)
 
 #%%
-model_ablated.save_pretrained("gemma-2-2b-it-wmdp-ablated")
 
+#%%
+model_ablated.save_pretrained("gemma-2-2b-it-wmdp-target_ablated")
+model_ablated_random.save_pretrained("gemma-2-2b-it-wmdp-random_ablated")
+
+# %%
