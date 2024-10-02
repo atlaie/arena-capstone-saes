@@ -1,0 +1,171 @@
+2024-09-30 18:39:39,793 INFO    StreamThr :238594 [internal.py:wandb_internal():87] W&B internal server running at pid: 238594, started at: 2024-09-30 18:39:39.792094
+2024-09-30 18:39:39,796 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status
+2024-09-30 18:39:39,799 INFO    WriterThread:238594 [datastore.py:open_for_write():85] open: /root/arena-capstone-saes/wandb/run-20240930_183939-orlk40f3/run-orlk40f3.wandb
+2024-09-30 18:39:39,802 DEBUG   SenderThread:238594 [sender.py:send():336] send: header
+2024-09-30 18:39:39,804 DEBUG   SenderThread:238594 [sender.py:send():336] send: run
+2024-09-30 18:39:40,149 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: check_version
+2024-09-30 18:39:40,150 INFO    SenderThread:238594 [dir_watcher.py:__init__():216] watching files in: /root/arena-capstone-saes/wandb/run-20240930_183939-orlk40f3/files
+2024-09-30 18:39:40,150 INFO    SenderThread:238594 [sender.py:_start_run_threads():1067] run started: orlk40f3 with start time 1727721579.787456
+2024-09-30 18:39:40,151 DEBUG   SenderThread:238594 [sender.py:send_request():363] send_request: summary_record
+2024-09-30 18:39:40,151 INFO    SenderThread:238594 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2024-09-30 18:39:40,151 DEBUG   SenderThread:238594 [sender.py:send_request():363] send_request: check_version
+2024-09-30 18:39:40,250 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: run_start
+2024-09-30 18:39:40,282 DEBUG   HandlerThread:238594 [system_info.py:__init__():31] System info init
+2024-09-30 18:39:40,282 DEBUG   HandlerThread:238594 [system_info.py:__init__():46] System info init done
+2024-09-30 18:39:40,282 INFO    HandlerThread:238594 [system_monitor.py:start():151] Starting system monitor
+2024-09-30 18:39:40,283 INFO    SystemMonitor:238594 [system_monitor.py:_start():116] Starting system asset monitoring threads
+2024-09-30 18:39:40,283 INFO    HandlerThread:238594 [system_monitor.py:probe():172] Collecting system info
+2024-09-30 18:39:40,284 INFO    SystemMonitor:238594 [interfaces.py:start():168] Started cpu
+2024-09-30 18:39:40,286 INFO    SystemMonitor:238594 [interfaces.py:start():168] Started disk
+2024-09-30 18:39:40,287 INFO    SystemMonitor:238594 [interfaces.py:start():168] Started gpu
+2024-09-30 18:39:40,288 INFO    SystemMonitor:238594 [interfaces.py:start():168] Started memory
+2024-09-30 18:39:40,289 INFO    SystemMonitor:238594 [interfaces.py:start():168] Started network
+2024-09-30 18:39:40,302 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:40,304 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:40,357 DEBUG   HandlerThread:238594 [system_info.py:probe():195] Probing system
+2024-09-30 18:39:40,361 DEBUG   HandlerThread:238594 [system_info.py:_probe_git():180] Probing git
+2024-09-30 18:39:40,372 DEBUG   HandlerThread:238594 [system_info.py:_probe_git():188] Probing git done
+2024-09-30 18:39:40,372 DEBUG   HandlerThread:238594 [system_info.py:probe():241] Probing system done
+2024-09-30 18:39:40,373 DEBUG   HandlerThread:238594 [system_monitor.py:probe():181] {'os': 'Linux-5.15.0-89-generic-x86_64-with-glibc2.35', 'python': '3.10.14', 'heartbeatAt': '2024-09-30T18:39:40.358121', 'startedAt': '2024-09-30T18:39:39.778620', 'docker': None, 'cuda': None, 'args': None, 'state': 'running', 'program': '/root/arena-capstone-saes/gemma_2_2b_finetuning_wmdp.py', 'codePath': 'gemma_2_2b_finetuning_wmdp.py', 'git': {'remote': 'https://github.com/atlaie/arena-capstone-saes.git', 'commit': '1562e6fd1296bbba3861f7e1b7f04be04507123f'}, 'email': None, 'root': '/root/arena-capstone-saes', 'host': '79b3e8fdca62', 'username': 'root', 'executable': '/opt/conda/envs/capstoneSAES/bin/python', 'cpu_count': 32, 'cpu_count_logical': 64, 'cpu_freq': {'current': 1.5691718749999999, 'min': 1500.0, 'max': 3000.0}, 'cpu_freq_per_core': [{'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 2.838, 'min': 1500.0, 'max': 3000.0}, {'current': 3.284, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 3.053, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 3.297, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}], 'disk': {'total': 128.0, 'used': 38.580379486083984}, 'gpu': 'NVIDIA A100X', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA A100X', 'memory_total': 85899345920}], 'memory': {'total': 503.7313652038574}}
+2024-09-30 18:39:40,373 INFO    HandlerThread:238594 [system_monitor.py:probe():182] Finished collecting system info
+2024-09-30 18:39:40,373 INFO    HandlerThread:238594 [system_monitor.py:probe():185] Publishing system info
+2024-09-30 18:39:40,373 DEBUG   HandlerThread:238594 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2024-09-30 18:39:40,374 DEBUG   HandlerThread:238594 [system_info.py:_save_pip():67] Saving pip packages done
+2024-09-30 18:39:40,374 DEBUG   HandlerThread:238594 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2024-09-30 18:39:41,152 INFO    Thread-12 :238594 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_183939-orlk40f3/files/requirements.txt
+2024-09-30 18:39:41,153 INFO    Thread-12 :238594 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_183939-orlk40f3/files/wandb-summary.json
+2024-09-30 18:39:41,153 INFO    Thread-12 :238594 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_183939-orlk40f3/files/conda-environment.yaml
+2024-09-30 18:39:42,309 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:42,311 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:44,321 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:44,323 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:46,329 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:46,331 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:48,337 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:48,339 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:50,344 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:50,345 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:51,154 INFO    Thread-12 :238594 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_183939-orlk40f3/files/conda-environment.yaml
+2024-09-30 18:39:51,265 DEBUG   HandlerThread:238594 [system_info.py:_save_conda():86] Saving conda packages done
+2024-09-30 18:39:51,267 INFO    HandlerThread:238594 [system_monitor.py:probe():187] Finished publishing system info
+2024-09-30 18:39:51,275 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:39:51,275 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:39:51,275 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:39:51,275 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:39:51,276 DEBUG   SenderThread:238594 [sender.py:send():336] send: files
+2024-09-30 18:39:51,276 INFO    SenderThread:238594 [sender.py:_save_file():1321] saving file wandb-metadata.json with policy now
+2024-09-30 18:39:51,297 DEBUG   SenderThread:238594 [sender.py:send():336] send: telemetry
+2024-09-30 18:39:51,305 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: stop_status
+2024-09-30 18:39:51,307 DEBUG   SenderThread:238594 [sender.py:send_request():363] send_request: stop_status
+2024-09-30 18:39:51,418 DEBUG   SenderThread:238594 [sender.py:send():336] send: config
+2024-09-30 18:39:51,420 DEBUG   SenderThread:238594 [sender.py:send():336] send: metric
+2024-09-30 18:39:51,420 DEBUG   SenderThread:238594 [sender.py:send():336] send: telemetry
+2024-09-30 18:39:51,420 DEBUG   SenderThread:238594 [sender.py:send():336] send: metric
+2024-09-30 18:39:51,420 WARNING SenderThread:238594 [sender.py:send_metric():1272] Seen metric with glob (shouldn't happen)
+2024-09-30 18:39:51,420 DEBUG   SenderThread:238594 [sender.py:send():336] send: telemetry
+2024-09-30 18:39:51,420 DEBUG   SenderThread:238594 [sender.py:send():336] send: telemetry
+2024-09-30 18:39:51,420 DEBUG   SenderThread:238594 [sender.py:send():336] send: config
+2024-09-30 18:39:51,725 INFO    wandb-upload_0:238594 [upload_job.py:push():138] Uploaded file /tmp/tmpzz6dd4p3wandb/rh0x6u0c-wandb-metadata.json
+2024-09-30 18:39:52,155 INFO    Thread-12 :238594 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_183939-orlk40f3/files/wandb-metadata.json
+2024-09-30 18:39:52,350 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:52,352 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:54,359 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:54,361 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:55,421 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:39:56,365 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:56,367 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:58,372 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:39:58,374 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:00,379 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:00,381 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:00,423 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:02,388 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:02,390 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:04,396 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:04,399 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:05,424 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:06,300 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:06,303 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:06,406 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:06,408 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:08,413 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:08,414 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:10,434 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:10,448 ERROR   gpu       :238594 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2024-09-30 18:40:10,453 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:10,455 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:11,165 INFO    Thread-12 :238594 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_183939-orlk40f3/files/config.yaml
+2024-09-30 18:40:11,334 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:12,464 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:12,466 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:14,473 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:14,474 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:15,588 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:16,373 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:16,479 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:16,481 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:18,486 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:18,488 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:20,493 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:20,495 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:20,589 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:21,408 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:22,501 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:22,503 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:24,509 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:24,511 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:25,591 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:26,516 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:26,518 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:26,792 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:27,175 INFO    Thread-12 :238594 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_183939-orlk40f3/files/output.log
+2024-09-30 18:40:28,523 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:28,525 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:29,176 INFO    Thread-12 :238594 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_183939-orlk40f3/files/output.log
+2024-09-30 18:40:30,529 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:30,531 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:31,132 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:31,809 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:32,536 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:32,537 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:34,542 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:34,544 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:36,133 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:36,553 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:36,555 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:36,810 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:38,561 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:38,563 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:40,289 DEBUG   SystemMonitor:238594 [system_monitor.py:_start():130] Starting system metrics aggregation loop
+2024-09-30 18:40:40,292 DEBUG   SenderThread:238594 [sender.py:send():336] send: stats
+2024-09-30 18:40:40,582 ERROR   gpu       :238594 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2024-09-30 18:40:40,588 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:40,590 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:41,294 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:41,811 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:42,596 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:42,598 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:44,603 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:44,604 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:46,295 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:46,609 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:46,611 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:46,812 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:48,616 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:48,618 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:50,623 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:50,625 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:51,296 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:51,813 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:52,629 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:52,631 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:54,636 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:54,638 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:56,297 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:40:56,644 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:56,646 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:56,814 DEBUG   HandlerThread:238594 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:40:58,652 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:40:58,654 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:00,659 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:00,661 ERROR   gpu       :238594 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error

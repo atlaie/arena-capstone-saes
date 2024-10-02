@@ -1,0 +1,23 @@
+AUTOTUNE bmm(16x8192x256, 16x256x8192)
+  bmm 18.0920 ms 100.0%
+  triton_bmm_15 50.1873 ms 36.0%
+  triton_bmm_9 54.2996 ms 33.3%
+  triton_bmm_13 54.4666 ms 33.2%
+  triton_bmm_14 54.6294 ms 33.1%
+  triton_bmm_10 54.8628 ms 33.0%
+  triton_bmm_6 62.4773 ms 29.0%
+  triton_bmm_5 64.1884 ms 28.2%
+  triton_bmm_18 68.9203 ms 26.3%
+  triton_bmm_16 80.6287 ms 22.4%
+SingleProcess AUTOTUNE benchmarking takes 15.7983 seconds and 0.0015 seconds precompiling
+AUTOTUNE bmm(16x8192x8192, 16x8192x256)
+  bmm 12.5030 ms 100.0%
+  triton_bmm_37 45.2004 ms 27.7%
+  triton_bmm_33 45.8496 ms 27.3%
+  triton_bmm_29 46.2397 ms 27.0%
+  triton_bmm_32 48.8182 ms 25.6%
+  triton_bmm_34 51.6086 ms 24.2%
+  triton_bmm_24 55.9575 ms 22.3%
+  triton_bmm_28 56.3610 ms 22.2%
+  triton_bmm_25 56.9528 ms 22.0%
+  triton_bmm_35 68.0090 ms 18.4%

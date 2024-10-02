@@ -25,7 +25,7 @@ dataset_train = Dataset.from_pandas(train_data)
 # Step 2: Initialize the FastLanguageModel
 max_seq_length = 2048  # Adjust as needed
 dtype = None  # Set to None for auto detection of device capabilities
-load_in_4bit = True  # Use 4-bit quantization
+load_in_4bit = False  # Use 4-bit quantization
 
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name="unsloth/gemma-2-2b",
@@ -56,15 +56,18 @@ tokenized_dataset_train = dataset_train.map(tokenize_function, batched=True)
 
 #%%
 
+print(model.named_modules)
+#%%
+
 trainer = SFTTrainer(
     model=model,
     tokenizer=tokenizer,
     train_dataset=tokenized_dataset_train,
     args=TrainingArguments(
         per_device_train_batch_size=2,
-        gradient_accumulation_steps=4,
-        warmup_steps=5,
-        max_steps=60,
+        gradient_accumulation_steps=8,
+        warmup_steps=10,
+        max_steps=100,
         learning_rate=2e-4,
         fp16=not use_bfloat16,  # Use float16 if bfloat16 is not supported
         bf16=use_bfloat16,  # Enable bfloat16 if supported
@@ -79,12 +82,10 @@ trainer = SFTTrainer(
 # Step 4: Train the Model
 trainer_stats = trainer.train()
 
-# Step 5: Save the Fine-Tuned Model
-#model.save_pretrained("./fine-tuned-gemma-on-swmdp")
-#tokenizer.save_pretrained("./fine-tuned-gemma-on-swmdp")
-
 # Output training statistics
 print(f"Training completed in {trainer_stats.metrics['train_runtime']} seconds.")
+print(model.named_modules)
+
 # %%
 
 

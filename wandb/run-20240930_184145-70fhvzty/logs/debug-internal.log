@@ -1,0 +1,88 @@
+2024-09-30 18:41:45,701 INFO    StreamThr :240156 [internal.py:wandb_internal():87] W&B internal server running at pid: 240156, started at: 2024-09-30 18:41:45.700747
+2024-09-30 18:41:45,704 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: status
+2024-09-30 18:41:45,706 INFO    WriterThread:240156 [datastore.py:open_for_write():85] open: /root/arena-capstone-saes/wandb/run-20240930_184145-70fhvzty/run-70fhvzty.wandb
+2024-09-30 18:41:45,708 DEBUG   SenderThread:240156 [sender.py:send():336] send: header
+2024-09-30 18:41:45,712 DEBUG   SenderThread:240156 [sender.py:send():336] send: run
+2024-09-30 18:41:45,943 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: check_version
+2024-09-30 18:41:45,945 INFO    SenderThread:240156 [dir_watcher.py:__init__():216] watching files in: /root/arena-capstone-saes/wandb/run-20240930_184145-70fhvzty/files
+2024-09-30 18:41:45,945 INFO    SenderThread:240156 [sender.py:_start_run_threads():1067] run started: 70fhvzty with start time 1727721705.697546
+2024-09-30 18:41:45,945 DEBUG   SenderThread:240156 [sender.py:send_request():363] send_request: summary_record
+2024-09-30 18:41:45,946 INFO    SenderThread:240156 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2024-09-30 18:41:45,946 DEBUG   SenderThread:240156 [sender.py:send_request():363] send_request: check_version
+2024-09-30 18:41:46,046 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: run_start
+2024-09-30 18:41:46,076 DEBUG   HandlerThread:240156 [system_info.py:__init__():31] System info init
+2024-09-30 18:41:46,076 DEBUG   HandlerThread:240156 [system_info.py:__init__():46] System info init done
+2024-09-30 18:41:46,076 INFO    HandlerThread:240156 [system_monitor.py:start():151] Starting system monitor
+2024-09-30 18:41:46,077 INFO    SystemMonitor:240156 [system_monitor.py:_start():116] Starting system asset monitoring threads
+2024-09-30 18:41:46,077 INFO    HandlerThread:240156 [system_monitor.py:probe():172] Collecting system info
+2024-09-30 18:41:46,077 INFO    SystemMonitor:240156 [interfaces.py:start():168] Started cpu
+2024-09-30 18:41:46,078 INFO    SystemMonitor:240156 [interfaces.py:start():168] Started disk
+2024-09-30 18:41:46,079 INFO    SystemMonitor:240156 [interfaces.py:start():168] Started gpu
+2024-09-30 18:41:46,080 INFO    SystemMonitor:240156 [interfaces.py:start():168] Started memory
+2024-09-30 18:41:46,081 INFO    SystemMonitor:240156 [interfaces.py:start():168] Started network
+2024-09-30 18:41:46,095 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:46,097 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:46,131 DEBUG   HandlerThread:240156 [system_info.py:probe():195] Probing system
+2024-09-30 18:41:46,134 DEBUG   HandlerThread:240156 [system_info.py:_probe_git():180] Probing git
+2024-09-30 18:41:46,143 DEBUG   HandlerThread:240156 [system_info.py:_probe_git():188] Probing git done
+2024-09-30 18:41:46,143 DEBUG   HandlerThread:240156 [system_info.py:probe():241] Probing system done
+2024-09-30 18:41:46,143 DEBUG   HandlerThread:240156 [system_monitor.py:probe():181] {'os': 'Linux-5.15.0-89-generic-x86_64-with-glibc2.35', 'python': '3.10.14', 'heartbeatAt': '2024-09-30T18:41:46.131202', 'startedAt': '2024-09-30T18:41:45.689242', 'docker': None, 'cuda': None, 'args': None, 'state': 'running', 'program': '/root/arena-capstone-saes/gemma_2_2b_finetuning_wmdp.py', 'codePath': 'gemma_2_2b_finetuning_wmdp.py', 'git': {'remote': 'https://github.com/atlaie/arena-capstone-saes.git', 'commit': '1562e6fd1296bbba3861f7e1b7f04be04507123f'}, 'email': None, 'root': '/root/arena-capstone-saes', 'host': '79b3e8fdca62', 'username': 'root', 'executable': '/opt/conda/envs/capstoneSAES/bin/python', 'cpu_count': 32, 'cpu_count_logical': 64, 'cpu_freq': {'current': 1.6252968749999996, 'min': 1500.0, 'max': 3000.0}, 'cpu_freq_per_core': [{'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 3.297, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 3.295, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 3.3, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 3.298, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.751, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}], 'disk': {'total': 128.0, 'used': 38.581092834472656}, 'gpu': 'NVIDIA A100X', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA A100X', 'memory_total': 85899345920}], 'memory': {'total': 503.7313652038574}}
+2024-09-30 18:41:46,144 INFO    HandlerThread:240156 [system_monitor.py:probe():182] Finished collecting system info
+2024-09-30 18:41:46,144 INFO    HandlerThread:240156 [system_monitor.py:probe():185] Publishing system info
+2024-09-30 18:41:46,144 DEBUG   HandlerThread:240156 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2024-09-30 18:41:46,145 DEBUG   HandlerThread:240156 [system_info.py:_save_pip():67] Saving pip packages done
+2024-09-30 18:41:46,145 DEBUG   HandlerThread:240156 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2024-09-30 18:41:46,948 INFO    Thread-12 :240156 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_184145-70fhvzty/files/wandb-summary.json
+2024-09-30 18:41:46,948 INFO    Thread-12 :240156 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_184145-70fhvzty/files/requirements.txt
+2024-09-30 18:41:46,949 INFO    Thread-12 :240156 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_184145-70fhvzty/files/conda-environment.yaml
+2024-09-30 18:41:48,102 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:48,103 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:50,108 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:50,110 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:52,115 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:52,117 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:54,122 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:54,124 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:56,129 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:56,131 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:56,949 INFO    Thread-12 :240156 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_184145-70fhvzty/files/conda-environment.yaml
+2024-09-30 18:41:56,993 DEBUG   HandlerThread:240156 [system_info.py:_save_conda():86] Saving conda packages done
+2024-09-30 18:41:56,994 INFO    HandlerThread:240156 [system_monitor.py:probe():187] Finished publishing system info
+2024-09-30 18:41:57,002 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:41:57,002 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:41:57,002 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:41:57,002 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 18:41:57,003 DEBUG   SenderThread:240156 [sender.py:send():336] send: files
+2024-09-30 18:41:57,003 INFO    SenderThread:240156 [sender.py:_save_file():1321] saving file wandb-metadata.json with policy now
+2024-09-30 18:41:57,024 DEBUG   SenderThread:240156 [sender.py:send():336] send: telemetry
+2024-09-30 18:41:57,031 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: stop_status
+2024-09-30 18:41:57,033 DEBUG   SenderThread:240156 [sender.py:send_request():363] send_request: stop_status
+2024-09-30 18:41:57,136 DEBUG   SenderThread:240156 [sender.py:send():336] send: config
+2024-09-30 18:41:57,138 DEBUG   SenderThread:240156 [sender.py:send():336] send: metric
+2024-09-30 18:41:57,138 DEBUG   SenderThread:240156 [sender.py:send():336] send: telemetry
+2024-09-30 18:41:57,139 DEBUG   SenderThread:240156 [sender.py:send():336] send: metric
+2024-09-30 18:41:57,139 WARNING SenderThread:240156 [sender.py:send_metric():1272] Seen metric with glob (shouldn't happen)
+2024-09-30 18:41:57,139 DEBUG   SenderThread:240156 [sender.py:send():336] send: telemetry
+2024-09-30 18:41:57,139 DEBUG   SenderThread:240156 [sender.py:send():336] send: telemetry
+2024-09-30 18:41:57,139 DEBUG   SenderThread:240156 [sender.py:send():336] send: config
+2024-09-30 18:41:57,453 INFO    wandb-upload_0:240156 [upload_job.py:push():138] Uploaded file /tmp/tmp96i4jvpxwandb/ers6my78-wandb-metadata.json
+2024-09-30 18:41:57,950 INFO    Thread-12 :240156 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_184145-70fhvzty/files/wandb-metadata.json
+2024-09-30 18:41:58,136 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:41:58,137 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:00,142 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:00,145 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:01,140 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:42:02,150 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:02,152 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:04,157 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:04,159 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:06,141 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 18:42:06,164 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:06,166 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:08,171 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:08,173 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:08,954 INFO    Thread-12 :240156 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_184145-70fhvzty/files/output.log
+2024-09-30 18:42:10,178 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:10,180 ERROR   gpu       :240156 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 18:42:10,955 INFO    Thread-12 :240156 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_184145-70fhvzty/files/output.log
+2024-09-30 18:42:11,742 DEBUG   HandlerThread:240156 [handler.py:handle_request():144] handle_request: status_report

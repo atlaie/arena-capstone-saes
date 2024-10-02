@@ -1,179 +1,314 @@
-# %%
-
+#%%
 from sae_lens import SAE
-import torch as t
+import torch
 from transformer_lens import HookedTransformer
-
-device = t.device("cuda" if t.cuda.is_available() else "cpu")
-
-model = HookedTransformer.from_pretrained("google/gemma-2-2b-it", device = device, local_files_only = True)
-
-#%%
-sae, cfg_dict, sparsity = SAE.from_pretrained(
-    release = "gemma-scope-2b-pt-res-canonical",
-    sae_id = "layer_25/width_16k/canonical",
-    device = device
-)
-
-#%%
-
-import os
-from unsloth import FastLanguageModel, is_bfloat16_supported
-import torch as t
-from transformer_lens import HookedTransformer
-
-use_bfloat16 = is_bfloat16_supported()
-max_seq_length = 2048  # Adjust as needed
-dtype = None  # Set to None for auto detection of device capabilities
-load_in_4bit = True  # Use 4-bit quantization
-
-#os.environ['HF_HUB_HOME'] = './gemma-2-2b-lora_model'
-# model = transformer_lens.HookedTransformer.from_pretrained('adapter_model')
-
-
-model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name="google/gemma-2-2b",
-    max_seq_length=max_seq_length,
-    dtype=t.float16 if not use_bfloat16 else t.bfloat16,  # Set correct precision
-    load_in_4bit=load_in_4bit
-)
-
-hooked_model = HookedTransformer.from_pretrained("gemma-2-2b", hf_model=model)
-
-#%%
-import plotly.express as px
-import torch as t
-from datasets import load_dataset
+from transformers import AutoTokenizer, DataCollatorForSeq2Seq
+import numpy as np
+from datasets import Dataset
+import pandas as pd
 from tqdm import tqdm
-from transformer_lens.utils import tokenize_and_concatenate
 
-dataset = load_dataset(
-    path = "NeelNanda/pile-10k",
-    split="train",
-    streaming=False,
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Load the model and tokenizer
+model = HookedTransformer.from_pretrained(
+    "google/gemma-2-2b-it", device=device, local_files_only=True
 )
+tokenizer = AutoTokenizer.from_pretrained('./google/gemma-2-2b-it')
 
-token_dataset = tokenize_and_concatenate(
-    dataset= dataset,# type: ignore
-    tokenizer = model.tokenizer, # type: ignore
-    streaming=True,
-    max_length=sae.cfg.context_size,
-    add_bos_token=sae.cfg.prepend_bos,
+# Load the SAE
+sae, cfg_dict, sparsity = SAE.from_pretrained(
+    release="gemma-scope-2b-pt-res-canonical",
+    sae_id="layer_25/width_16k/canonical",
+    device=device
 )
-
-t.set_grad_enabled(False)
-
 #%%
-sae.eval()  # prevents error if we're expecting a dead neuron mask for who grads
 
-with t.no_grad():
-    # activation store can give us tokens.
-    batch_tokens = token_dataset[:6]["tokens"]
-    _, cache = model.run_with_cache(batch_tokens, 
-    names_filter = sae.cfg.hook_name,
-    prepend_bos=True)
 
-    # Use the SAE
-    feature_acts = sae.encode(cache[sae.cfg.hook_name])
-    sae_out = sae.decode(feature_acts)
 
-    # save some room
-    del cache
-
-    # ignore the bos token, get the number of features that activated in each token, averaged accross batch and position
-    l25 = (feature_acts[:, 1:] > 0).float().sum(-1).detach()
-    print("average l25", l25.mean().item())
-    px.histogram(l25.flatten().cpu().numpy()).show()
 
 
 #%%
+from torch.utils.data import DataLoader
 
-from transformer_lens import utils
-from functools import partial
+# Load and process the sWMDP Dataset
+full_synthetic_wmdp = pd.read_csv("full_synthetic_wmdp.csv")
 
-# next we want to do a reconstruction test.
-def reconstr_hook(activation, hook, sae_out):
-    return sae_out
+DATA_SEED = 42
+train_data = full_synthetic_wmdp.sample(frac=1, random_state=DATA_SEED)
+train_data.reset_index(drop=True, inplace=True)
 
+# Convert the Pandas DataFrame to Hugging Face Dataset format
+dataset_train = Dataset.from_pandas(train_data)
 
-def zero_abl_hook(activation, hook):
-    return t.zeros_like(activation)
+def tokenize_function_with_choices(examples):
+    input_ids_list = []
+    attention_mask_list = []
+    labels_list = []
 
+    for i in range(len(examples["choices"])):
+        # Clean the choices string for the current example
+        raw_choices = examples["choices"][i].strip("[]")  # Remove the square brackets
+        choices_list = [choice.strip("' ") for choice in raw_choices.split(", ")]  # Clean and split
 
-print("Orig", model(batch_tokens, return_type="loss").item())
-print(
-    "reconstr",
-    model.run_with_hooks(
-        batch_tokens,
-        fwd_hooks=[
-            (
-                sae.cfg.hook_name,
-                partial(reconstr_hook, sae_out=sae_out),
-            )
-        ],
-        return_type="loss",
-    ).item(),
-)
-print(
-    "Zero",
-    model.run_with_hooks(
-        batch_tokens,
-        return_type="loss",
-        fwd_hooks=[(sae.cfg.hook_name, zero_abl_hook)],
-    ).item(),
-)
-
-#%%
-
-example_prompt = "When John and Mary went to the shops, John gave the bag to"
-example_answer = " Mary"
-utils.test_prompt(example_prompt, example_answer, model, prepend_bos=True)
-
-logits, cache = model.run_with_cache(example_prompt, prepend_bos=True)
-tokens = model.to_tokens(example_prompt)
-sae_out = sae(cache[sae.cfg.hook_name])
-
-
-def reconstr_hook(activations, hook, sae_out):
-    return sae_out
-
-
-def zero_abl_hook(mlp_out, hook):
-    return t.zeros_like(mlp_out)
-
-
-hook_name = sae.cfg.hook_name
-
-print("Orig", model(tokens, return_type="loss").item())
-print(
-    "reconstr",
-    model.run_with_hooks(
-        tokens,
-        fwd_hooks=[
-            (
-                hook_name,
-                partial(reconstr_hook, sae_out=sae_out),
-            )
-        ],
-        return_type="loss",
-    ).item(),
-)
-print(
-    "Zero",
-    model.run_with_hooks(
-        tokens,
-        return_type="loss",
-        fwd_hooks=[(hook_name, zero_abl_hook)],
-    ).item(),
-)
-
-
-with model.hooks(
-    fwd_hooks=[
-        (
-            hook_name,
-            partial(reconstr_hook, sae_out=sae_out),
+        # Combine the question and the cleaned-up choices into a single input string
+        combined_input = (
+            examples["question"][i] + "\nChoices: " + ', '.join(choices_list) + "\nAnswer:"
         )
-    ]
-):
-    utils.test_prompt(example_prompt, example_answer, model, prepend_bos=True)
+
+        # Tokenize the combined input
+        tokenized_inputs = tokenizer(
+            combined_input,
+            truncation=True,
+            max_length=512
+        )
+
+        # Get the correct answer based on the index
+        answer_idx = examples["answer"][i]  # The index of the correct answer
+        correct_answer = choices_list[answer_idx]  # Retrieve the correct answer text
+
+        # Tokenize the correct answer (as the label for the model to predict)
+        labels = tokenizer(
+            correct_answer,
+            truncation=True,
+            max_length=512
+        )["input_ids"]
+
+        # Mask out padding tokens (-100 to ignore them in loss calculation)
+        labels = [-100 if token == tokenizer.pad_token_id else token for token in labels]
+
+        # Append the tokenized data to the respective lists
+        input_ids_list.append(tokenized_inputs["input_ids"])
+        attention_mask_list.append(tokenized_inputs["attention_mask"])
+        labels_list.append(labels)
+
+    return {
+        "input_ids": input_ids_list,
+        "attention_mask": attention_mask_list,
+        "labels": labels_list
+    }
+
+# Tokenize the training set and remove unnecessary columns
+tokenized_dataset_train = dataset_train.map(
+    tokenize_function_with_choices,
+    batched=True,
+    remove_columns=dataset_train.column_names  # Remove original columns
+)
+
+# Initialize the Data Collator
+data_collator = DataCollatorForSeq2Seq(
+    tokenizer=tokenizer,
+    model=model,
+    padding='longest',
+    return_tensors="pt",
+    label_pad_token_id=-100
+)
+
+# # Define the subset size
+# subset_size = 160  # Adjust this number as needed
+
+# # Select a subset of the dataset
+# subset_dataset = tokenized_dataset_train.select(range(subset_size))
+
+# Create DataLoader with the subset
+batch_size = 32  # Adjust based on your GPU memory
+train_dataloader = DataLoader(
+    #subset_dataset,
+    tokenized_dataset_train,
+    batch_size=batch_size,
+    shuffle=False,
+    collate_fn=data_collator
+)
+
+# Function to compute feature rank sums
+def compute_feature_ranks_per_sample(model, sae, dataloader, device):
+    model.eval()
+    sae.eval()
+    num_features = sae.cfg.d_sae
+    all_ranks = []
+    total_samples = 0
+
+    for batch in tqdm(dataloader, desc="Processing"):
+        # Move data to device
+        input_ids = batch["input_ids"].to(device)
+        batch_size = input_ids.size(0)
+        total_samples += batch_size
+
+        with torch.no_grad():
+            # Run model to get activations at the SAE layer
+            _, cache = model.run_with_cache(
+                input_ids,
+                names_filter=sae.cfg.hook_name,
+                prepend_bos=True
+            )
+
+            activations = cache[sae.cfg.hook_name]  # Shape: [batch_size, seq_len, hidden_size]
+
+            # Encode activations using SAE
+            feature_acts = sae.encode(activations)  # Shape: [batch_size, seq_len, num_features]
+            reconstruction = feature_acts[fired_mask][:, feature_list] @ sae.W_dec[feature_list]
+
+            # Aggregate activations over positions (e.g., take max over seq_len)
+            max_feature_acts = feature_acts.max(dim=1).values  # Shape: [batch_size, num_features]
+
+            # Get sorted indices (features sorted by decreasing activation)
+            sorted_indices = torch.argsort(-max_feature_acts, dim=-1)  # Shape: [batch_size, num_features]
+
+            # Initialize ranks tensor with integer type
+            ranks = torch.zeros_like(sorted_indices)  # dtype will be torch.int64
+
+            # Create rank values (dtype will be torch.int64)
+            rank_values = torch.arange(num_features, device=device).unsqueeze(0).expand(batch_size, -1)
+
+            # Scatter rank values into ranks tensor
+            ranks.scatter_(dim=1, index=sorted_indices, src=rank_values)
+
+            # Move ranks to CPU and append to list
+            ranks_cpu = ranks.cpu()
+            all_ranks.append(ranks_cpu)
+
+            # Clean up to free memory
+            del cache, feature_acts, activations
+
+    # Concatenate all ranks along 0th dimension
+    ranks_matrix = torch.cat(all_ranks, dim=0)  # Shape: [n_samples, num_features]
+
+    return ranks_matrix
+
+
+# Run computation
+feature_ranking = compute_feature_ranks_per_sample(
+    model=model,
+    sae=sae,
+    dataloader=train_dataloader,
+    device=device
+)
+#%%
+import seaborn as sns
+import cmcrameri as cmc
+idx_order = np.argsort(np.mean(feature_ranking.detach().cpu().numpy(), axis = 0))
+f_rank = feature_ranking[:, idx_order].detach().cpu().numpy()
+#%%
+sns.heatmap(f_rank, cmap = 'cmc.lapaz', cbar_kws={'label':'Activation-based Rank'})
+plt.xlabel('SAE latent #')
+plt.ylabel('Dataset sample #')
+plt.tight_layout()
+plt.savefig('results/LatentOrder_01102024.png', transparent = True, dpi = 200)
+#%%
+import matplotlib.pyplot as plt
+
+plt.plot(np.std(f_rank, axis = 0)/np.sqrt(f_rank.shape[0]), color = 'gray', alpha = 1, lw = 1)
+plt.xlabel('SAE latent #')
+plt.ylabel('$\sigma(A)/\sqrt{N_{SAE}}$')
+plt.axvline(20, ls = '--', lw = 1, color = 'black')
+sns.despine()
+plt.tight_layout()
+plt.xlim([-5, 105])
+plt.ylim([-1, 20])
+plt.savefig('results/LatentStd_ZoomedIn_01102024.svg', transparent = True)
+
+#%%
+from tabulate import tabulate
+
+for ii in range(3):
+    logits = sae.W_dec[idx_order[ii]] @ model.W_U
+
+    top_logits, top_token_ids = logits.topk(5)
+    top_tokens = model.to_str_tokens(top_token_ids)
+    bottom_logits, bottom_token_ids = logits.topk(5, largest=False)
+    bottom_tokens = model.to_str_tokens(bottom_token_ids)
+
+    print(
+        tabulate(
+            zip(map(repr, bottom_tokens), bottom_logits, map(repr, top_tokens), top_logits),
+            headers=["Bottom Tokens", "Logits", "Top Tokens", "Logits"],
+            tablefmt="simple_outline",
+            stralign="right",
+            floatfmt="+.4f",
+            showindex=True,
+        )
+    )
+
+#%%
+from transformers import AutoModelForCausalLM
+
+model_transformers = AutoModelForCausalLM.from_pretrained('./google/gemma-2-2b-it')
+
+#%%
+
+# Function to identify which neurons in the hidden layer are most affected by the top latents
+def identify_neurons_from_sae(sae, idx_order, top_k = 20, percentile = 99):
+    # Select the rows of W_dec corresponding to the top latents
+    top_latent_weights = sae.W_dec[idx_order[:top_k], :]  # Shape: [20, 2304]
+    
+    # Sum the absolute values of the weights across the top latents
+    # This gives us a measure of how much each neuron in the hidden layer is influenced
+    neuron_importance = top_latent_weights.abs().sum(dim=0)  # Shape: [2304]
+    
+    perc = np.percentile(neuron_importance.detach().cpu().numpy(), percentile)
+
+    return np.where(neuron_importance.detach().cpu().numpy() > perc)[0]
+
+
+# Function to ablate the most important neurons in the model by zeroing out their downstream weights
+def ablate_neurons_in_model(model, important_neurons):
+    with torch.no_grad():
+        # Get a copy of the down_proj weights (this will avoid in-place modifications)
+        down_proj_weights = model.model.layers[-1].mlp.down_proj.weight.clone()
+        
+        # Zero out the rows corresponding to the important neurons
+        down_proj_weights[important_neurons, :] = 0.0
+        
+        # Assign the modified weight back to the model
+        model.model.layers[-1].mlp.down_proj.weight = torch.nn.Parameter(down_proj_weights)
+
+    return model
+
+
+#%%
+weights_1 = model_transformers.model.layers[-1].mlp.down_proj.weight
+important_neurons = identify_neurons_from_sae(sae, idx_order, top_k = 20, percentile=99)
+model_ablated = ablate_neurons_in_model(model_transformers, important_neurons)
+weights_ablated = model_ablated.model.layers[-1].mlp.down_proj.weight
+#%%
+important_neurons.shape
+#%%
+import matplotlib.pyplot as plt
+plt.subplots(figsize = (15, 5))
+sums = np.sum(weights_ablated.detach().numpy(), axis = 1)
+plt.plot(sums, lw = 1, zorder = -30, color = 'grey')
+zero_w = np.where(sums == 0)[0]
+for ii, line in enumerate(zero_w):
+    plt.axvline(line, color = 'black', lw = 1, ls = '--')
+    if ii == 0:
+        plt.plot(line, sums[line], 'o', color = 'black', mfc = 'black', zorder = -1, ms = 6, label = 'Ablated')
+    plt.plot(line, sums[line], 'o', color = 'black', mfc = 'black', zorder = -1, ms = 6)
+
+plt.legend(handlelength = 0, labelcolor = 'linecolor', frameon = False, fontsize = 14)
+plt.ylabel('$W_{MLP}$', fontsize = 14)
+plt.xlabel('MLP neuron #', fontsize = 14)
+plt.yticks(fontsize = 14)
+plt.xticks(fontsize = 14)
+sns.despine()
+plt.tight_layout()
+plt.savefig('results/Ablated_Neurons_Weights_01102024.svg', transparent = True)
+#%%
+weights_ablated.shape
+#%%
+top_latent_weights = sae.W_dec[important_neurons, :]  # Shape: [20, 2304]
+    
+# Sum the absolute values of the weights across the top latents
+# This gives us a measure of how much each neuron in the hidden layer is influenced
+neuron_importance = top_latent_weights.abs().sum(dim=0)  # Shape: [2304]
+sns.histplot(data = neuron_importance.detach().cpu().numpy(),
+              bins = 50, kde = True, alpha = 0.7, color = 'grey', linewidth = 0.5)
+perc = np.percentile(neuron_importance.detach().cpu().numpy(), 99)
+plt.axvline(perc, color = 'black')
+plt.xlabel(r"Importance $(||W_{SAE\rightarrow Neuron}||_0)$")
+sns.despine()
+plt.tight_layout()
+plt.savefig('results/NeuronSAE_Importance_01102024.svg', transparent = True)
+
+#%%
+model_ablated.save_pretrained("gemma-2-2b-it-wmdp-ablated")
+

@@ -1,0 +1,468 @@
+2024-09-30 15:25:29,820 INFO    StreamThr :128433 [internal.py:wandb_internal():87] W&B internal server running at pid: 128433, started at: 2024-09-30 15:25:29.819214
+2024-09-30 15:25:29,822 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status
+2024-09-30 15:25:29,825 INFO    WriterThread:128433 [datastore.py:open_for_write():85] open: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/run-ts8d1xb7.wandb
+2024-09-30 15:25:29,826 DEBUG   SenderThread:128433 [sender.py:send():336] send: header
+2024-09-30 15:25:29,834 DEBUG   SenderThread:128433 [sender.py:send():336] send: run
+2024-09-30 15:25:30,176 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: check_version
+2024-09-30 15:25:30,178 INFO    SenderThread:128433 [dir_watcher.py:__init__():216] watching files in: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files
+2024-09-30 15:25:30,178 INFO    SenderThread:128433 [sender.py:_start_run_threads():1067] run started: ts8d1xb7 with start time 1727709929.817825
+2024-09-30 15:25:30,178 DEBUG   SenderThread:128433 [sender.py:send_request():363] send_request: summary_record
+2024-09-30 15:25:30,179 INFO    SenderThread:128433 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2024-09-30 15:25:30,179 DEBUG   SenderThread:128433 [sender.py:send_request():363] send_request: check_version
+2024-09-30 15:25:30,282 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: run_start
+2024-09-30 15:25:30,317 DEBUG   HandlerThread:128433 [system_info.py:__init__():31] System info init
+2024-09-30 15:25:30,317 DEBUG   HandlerThread:128433 [system_info.py:__init__():46] System info init done
+2024-09-30 15:25:30,317 INFO    HandlerThread:128433 [system_monitor.py:start():151] Starting system monitor
+2024-09-30 15:25:30,317 INFO    SystemMonitor:128433 [system_monitor.py:_start():116] Starting system asset monitoring threads
+2024-09-30 15:25:30,317 INFO    HandlerThread:128433 [system_monitor.py:probe():172] Collecting system info
+2024-09-30 15:25:30,318 INFO    SystemMonitor:128433 [interfaces.py:start():168] Started cpu
+2024-09-30 15:25:30,319 INFO    SystemMonitor:128433 [interfaces.py:start():168] Started disk
+2024-09-30 15:25:30,320 INFO    SystemMonitor:128433 [interfaces.py:start():168] Started gpu
+2024-09-30 15:25:30,320 INFO    SystemMonitor:128433 [interfaces.py:start():168] Started memory
+2024-09-30 15:25:30,321 INFO    SystemMonitor:128433 [interfaces.py:start():168] Started network
+2024-09-30 15:25:30,334 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:30,335 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:30,407 DEBUG   HandlerThread:128433 [system_info.py:probe():195] Probing system
+2024-09-30 15:25:30,410 DEBUG   HandlerThread:128433 [system_info.py:_probe_git():180] Probing git
+2024-09-30 15:25:30,420 DEBUG   HandlerThread:128433 [system_info.py:_probe_git():188] Probing git done
+2024-09-30 15:25:30,420 DEBUG   HandlerThread:128433 [system_info.py:probe():241] Probing system done
+2024-09-30 15:25:30,420 DEBUG   HandlerThread:128433 [system_monitor.py:probe():181] {'os': 'Linux-5.15.0-89-generic-x86_64-with-glibc2.35', 'python': '3.10.14', 'heartbeatAt': '2024-09-30T15:25:30.407623', 'startedAt': '2024-09-30T15:25:29.809380', 'docker': None, 'cuda': None, 'args': None, 'state': 'running', 'program': '/root/arena-capstone-saes/gemma_2_2b_finetuning_wmdp.py', 'codePath': 'gemma_2_2b_finetuning_wmdp.py', 'git': {'remote': 'https://github.com/atlaie/arena-capstone-saes.git', 'commit': '1562e6fd1296bbba3861f7e1b7f04be04507123f'}, 'email': None, 'root': '/root/arena-capstone-saes', 'host': '79b3e8fdca62', 'username': 'root', 'executable': '/opt/conda/envs/capstoneSAES/bin/python', 'cpu_count': 32, 'cpu_count_logical': 64, 'cpu_freq': {'current': 1.6050781250000004, 'min': 1500.0, 'max': 3000.0}, 'cpu_freq_per_core': [{'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 3.296, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 2.4, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 3.299, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.549, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}, {'current': 1.5, 'min': 1500.0, 'max': 3000.0}], 'disk': {'total': 128.0, 'used': 47.861568450927734}, 'gpu': 'NVIDIA A100X', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA A100X', 'memory_total': 85899345920}], 'memory': {'total': 503.7313652038574}}
+2024-09-30 15:25:30,420 INFO    HandlerThread:128433 [system_monitor.py:probe():182] Finished collecting system info
+2024-09-30 15:25:30,420 INFO    HandlerThread:128433 [system_monitor.py:probe():185] Publishing system info
+2024-09-30 15:25:30,420 DEBUG   HandlerThread:128433 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2024-09-30 15:25:30,421 DEBUG   HandlerThread:128433 [system_info.py:_save_pip():67] Saving pip packages done
+2024-09-30 15:25:30,421 DEBUG   HandlerThread:128433 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2024-09-30 15:25:31,181 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/requirements.txt
+2024-09-30 15:25:31,182 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/conda-environment.yaml
+2024-09-30 15:25:31,182 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/wandb-summary.json
+2024-09-30 15:25:32,340 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:32,342 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:34,348 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:34,351 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:36,357 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:36,359 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:38,365 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:38,367 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:40,373 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:40,374 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:41,182 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/conda-environment.yaml
+2024-09-30 15:25:41,283 DEBUG   HandlerThread:128433 [system_info.py:_save_conda():86] Saving conda packages done
+2024-09-30 15:25:41,285 INFO    HandlerThread:128433 [system_monitor.py:probe():187] Finished publishing system info
+2024-09-30 15:25:41,290 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:25:41,290 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:25:41,290 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:25:41,290 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:25:41,291 DEBUG   SenderThread:128433 [sender.py:send():336] send: files
+2024-09-30 15:25:41,291 INFO    SenderThread:128433 [sender.py:_save_file():1321] saving file wandb-metadata.json with policy now
+2024-09-30 15:25:41,314 DEBUG   SenderThread:128433 [sender.py:send():336] send: telemetry
+2024-09-30 15:25:41,321 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: stop_status
+2024-09-30 15:25:41,323 DEBUG   SenderThread:128433 [sender.py:send_request():363] send_request: stop_status
+2024-09-30 15:25:41,503 DEBUG   SenderThread:128433 [sender.py:send():336] send: config
+2024-09-30 15:25:41,505 DEBUG   SenderThread:128433 [sender.py:send():336] send: metric
+2024-09-30 15:25:41,505 DEBUG   SenderThread:128433 [sender.py:send():336] send: telemetry
+2024-09-30 15:25:41,505 DEBUG   SenderThread:128433 [sender.py:send():336] send: metric
+2024-09-30 15:25:41,505 WARNING SenderThread:128433 [sender.py:send_metric():1272] Seen metric with glob (shouldn't happen)
+2024-09-30 15:25:41,505 DEBUG   SenderThread:128433 [sender.py:send():336] send: telemetry
+2024-09-30 15:25:41,505 DEBUG   SenderThread:128433 [sender.py:send():336] send: telemetry
+2024-09-30 15:25:41,505 DEBUG   SenderThread:128433 [sender.py:send():336] send: config
+2024-09-30 15:25:41,725 INFO    wandb-upload_0:128433 [upload_job.py:push():138] Uploaded file /tmp/tmp3nyqg3fvwandb/pfzrefic-wandb-metadata.json
+2024-09-30 15:25:42,183 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/wandb-metadata.json
+2024-09-30 15:25:42,380 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:42,382 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:44,392 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:44,395 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:45,506 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:25:46,403 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:46,405 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:48,413 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:48,415 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:50,420 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:50,423 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:50,507 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:25:52,428 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:52,430 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:54,437 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:54,439 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:54,942 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: partial_history
+2024-09-30 15:25:54,945 DEBUG   SenderThread:128433 [sender.py:send():336] send: metric
+2024-09-30 15:25:54,945 DEBUG   SenderThread:128433 [sender.py:send():336] send: metric
+2024-09-30 15:25:54,945 DEBUG   SenderThread:128433 [sender.py:send():336] send: metric
+2024-09-30 15:25:54,945 DEBUG   SenderThread:128433 [sender.py:send():336] send: metric
+2024-09-30 15:25:54,945 DEBUG   SenderThread:128433 [sender.py:send():336] send: history
+2024-09-30 15:25:54,946 DEBUG   SenderThread:128433 [sender.py:send_request():363] send_request: summary_record
+2024-09-30 15:25:54,948 INFO    SenderThread:128433 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2024-09-30 15:25:55,188 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/wandb-summary.json
+2024-09-30 15:25:55,949 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:25:56,311 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:25:56,312 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:25:56,446 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:56,449 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:58,454 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:25:58,457 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:00,499 ERROR   gpu       :128433 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2024-09-30 15:26:00,505 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:00,507 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:00,955 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:01,191 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/config.yaml
+2024-09-30 15:26:01,313 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:02,513 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:02,515 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:04,522 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:04,524 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:06,101 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:06,314 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:06,530 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:06,532 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:07,757 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: partial_history
+2024-09-30 15:26:07,759 DEBUG   SenderThread:128433 [sender.py:send():336] send: history
+2024-09-30 15:26:07,760 DEBUG   SenderThread:128433 [sender.py:send_request():363] send_request: summary_record
+2024-09-30 15:26:07,762 INFO    SenderThread:128433 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2024-09-30 15:26:08,194 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/wandb-summary.json
+2024-09-30 15:26:08,538 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:08,540 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:10,547 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:10,551 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:11,316 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:11,763 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:12,558 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:12,561 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:14,566 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:14,568 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:16,317 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:16,574 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:16,576 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:16,764 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:18,581 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:18,583 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:20,575 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: partial_history
+2024-09-30 15:26:20,577 DEBUG   SenderThread:128433 [sender.py:send():336] send: history
+2024-09-30 15:26:20,578 DEBUG   SenderThread:128433 [sender.py:send_request():363] send_request: summary_record
+2024-09-30 15:26:20,580 INFO    SenderThread:128433 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2024-09-30 15:26:20,589 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:20,591 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:21,200 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/wandb-summary.json
+2024-09-30 15:26:21,318 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:22,581 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:22,597 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:22,599 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:24,605 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:24,607 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:26,320 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:26,612 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:26,614 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:27,582 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:28,622 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:28,625 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:30,322 DEBUG   SystemMonitor:128433 [system_monitor.py:_start():130] Starting system metrics aggregation loop
+2024-09-30 15:26:30,325 DEBUG   SenderThread:128433 [sender.py:send():336] send: stats
+2024-09-30 15:26:30,638 ERROR   gpu       :128433 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2024-09-30 15:26:30,643 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:30,645 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:31,321 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:32,651 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:32,653 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:33,327 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:33,392 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: partial_history
+2024-09-30 15:26:33,394 DEBUG   SenderThread:128433 [sender.py:send():336] send: history
+2024-09-30 15:26:33,394 DEBUG   SenderThread:128433 [sender.py:send_request():363] send_request: summary_record
+2024-09-30 15:26:33,396 INFO    SenderThread:128433 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2024-09-30 15:26:34,206 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/wandb-summary.json
+2024-09-30 15:26:34,659 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:34,661 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:36,323 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:36,668 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:36,671 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:38,398 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:38,676 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:38,678 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:40,684 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:40,686 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:41,324 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:42,692 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:42,694 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:43,399 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:44,699 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:44,702 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:46,208 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: partial_history
+2024-09-30 15:26:46,210 DEBUG   SenderThread:128433 [sender.py:send():336] send: history
+2024-09-30 15:26:46,210 DEBUG   SenderThread:128433 [sender.py:send_request():363] send_request: summary_record
+2024-09-30 15:26:46,213 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/wandb-summary.json
+2024-09-30 15:26:46,213 INFO    SenderThread:128433 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2024-09-30 15:26:46,325 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:46,707 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:46,710 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:48,716 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:48,718 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:49,215 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:50,723 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:50,726 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:51,326 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:52,730 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:52,732 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:54,217 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_created():275] file/dir created: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/output.log
+2024-09-30 15:26:54,751 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:54,753 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:54,875 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:26:56,218 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/output.log
+2024-09-30 15:26:56,333 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:26:56,758 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:56,760 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:58,219 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/output.log
+2024-09-30 15:26:58,765 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:26:58,767 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:00,097 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:00,327 DEBUG   SenderThread:128433 [sender.py:send():336] send: stats
+2024-09-30 15:27:00,781 ERROR   gpu       :128433 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2024-09-30 15:27:00,786 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:00,788 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:01,334 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:02,792 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:02,794 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:04,811 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:04,813 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:05,329 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:06,335 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:06,818 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:06,820 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:08,824 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:08,826 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:10,330 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:10,831 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:10,833 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:11,336 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:12,838 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:12,839 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:14,846 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:14,848 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:15,331 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:16,337 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:16,853 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:16,855 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:18,859 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:18,861 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:20,332 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:20,866 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:20,868 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:21,338 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:22,873 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:22,875 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:24,880 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:24,881 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:25,333 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:26,339 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:26,886 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:26,888 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:28,893 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:28,895 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:30,329 DEBUG   SenderThread:128433 [sender.py:send():336] send: stats
+2024-09-30 15:27:30,909 ERROR   gpu       :128433 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2024-09-30 15:27:30,914 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:30,916 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:31,330 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:31,340 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:32,921 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:32,923 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:34,928 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:34,930 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:36,332 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:36,341 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:36,935 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:36,937 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:38,946 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:38,948 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:40,953 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:40,955 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:41,333 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:41,343 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:42,960 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:42,962 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:44,967 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:44,969 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:46,334 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:46,344 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:46,974 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:46,976 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:48,981 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:48,983 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:50,988 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:50,990 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:51,335 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:51,345 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:52,995 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:52,997 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:55,002 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:55,003 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:56,336 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:27:56,346 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:27:57,010 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:57,013 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:59,018 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:27:59,020 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:00,330 DEBUG   SenderThread:128433 [sender.py:send():336] send: stats
+2024-09-30 15:28:01,060 ERROR   gpu       :128433 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2024-09-30 15:28:01,065 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:01,066 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:01,348 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:02,332 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:03,071 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:03,073 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:05,078 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:05,080 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:06,349 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:07,085 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:07,087 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:07,333 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:09,092 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:09,094 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:11,099 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:11,101 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:11,350 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:12,334 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:13,106 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:13,108 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:15,112 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:15,114 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:16,351 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:17,119 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:17,121 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:17,336 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:19,127 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:19,128 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:21,133 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:21,135 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:21,352 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:22,337 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:23,140 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:23,142 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:25,147 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:25,149 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:26,353 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:27,155 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:27,158 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:27,338 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:29,164 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:29,165 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:30,333 DEBUG   SenderThread:128433 [sender.py:send():336] send: stats
+2024-09-30 15:28:31,183 ERROR   gpu       :128433 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2024-09-30 15:28:31,188 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:31,189 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:31,354 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:33,196 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:33,199 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:33,335 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:35,205 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:35,207 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:36,355 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:37,213 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:37,215 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:38,336 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:39,226 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:39,231 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:41,237 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:41,239 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:41,356 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:43,245 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:43,247 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:43,338 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:45,254 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:45,255 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:46,357 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:47,262 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:47,264 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:48,339 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:49,269 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:49,271 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:51,276 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:51,278 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:51,358 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:53,284 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:53,286 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:53,340 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:55,293 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:55,295 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:56,359 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:28:57,302 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:57,303 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:58,341 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:28:59,310 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:28:59,312 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:00,334 DEBUG   SenderThread:128433 [sender.py:send():336] send: stats
+2024-09-30 15:29:01,331 ERROR   gpu       :128433 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2024-09-30 15:29:01,337 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:01,338 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:01,360 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:29:03,345 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:03,347 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:04,337 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:29:05,352 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:05,353 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:06,361 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:29:07,359 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:07,361 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:09,338 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:29:09,365 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:09,367 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:11,362 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:29:11,372 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:11,374 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:13,381 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:13,382 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:14,339 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:29:15,389 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:15,391 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:16,363 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:29:17,397 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:17,399 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:19,340 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:29:19,405 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:19,407 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:21,364 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:29:21,412 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:21,414 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:23,419 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:23,421 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:24,342 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:29:25,426 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:25,427 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:26,366 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:29:27,433 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:27,434 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:29,450 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:29,452 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:29,720 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:29:30,290 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/output.log
+2024-09-30 15:29:30,336 DEBUG   SenderThread:128433 [sender.py:send():336] send: stats
+2024-09-30 15:29:31,367 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:29:31,500 ERROR   gpu       :128433 [interfaces.py:aggregate():146] Failed to serialize metric: division by zero
+2024-09-30 15:29:31,506 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:31,507 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:32,291 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/output.log
+2024-09-30 15:29:33,514 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:33,516 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:34,292 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/output.log
+2024-09-30 15:29:35,141 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:29:35,524 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:35,526 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:36,368 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:29:37,531 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:37,533 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:38,294 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/output.log
+2024-09-30 15:29:39,543 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:39,546 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:40,295 INFO    Thread-12 :128433 [dir_watcher.py:_on_file_modified():292] file/dir modified: /root/arena-capstone-saes/wandb/run-20240930_152529-ts8d1xb7/files/output.log
+2024-09-30 15:29:40,752 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:29:41,369 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:29:41,551 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:41,557 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:43,563 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:43,565 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:45,570 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:45,572 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:45,754 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:29:46,370 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive
+2024-09-30 15:29:47,577 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:47,578 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:49,585 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:49,586 ERROR   gpu       :128433 [interfaces.py:monitor():129] Failed to sample metric: Unknown Error
+2024-09-30 15:29:50,755 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: status_report
+2024-09-30 15:29:51,371 DEBUG   HandlerThread:128433 [handler.py:handle_request():144] handle_request: keepalive

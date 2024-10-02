@@ -1,0 +1,170 @@
+<bound method Module.named_modules of PeftModelForCausalLM(
+  (base_model): LoraModel(
+    (model): Gemma2ForCausalLM(
+      (model): Gemma2Model(
+        (embed_tokens): Embedding(256000, 2304)
+        (layers): ModuleList(
+          (0-25): 26 x Gemma2DecoderLayer(
+            (self_attn): Gemma2Attention(
+              (q_proj): lora.Linear(
+                (base_layer): Linear(in_features=2304, out_features=2048, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=2304, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=2048, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (k_proj): lora.Linear(
+                (base_layer): Linear(in_features=2304, out_features=1024, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=2304, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=1024, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (v_proj): lora.Linear(
+                (base_layer): Linear(in_features=2304, out_features=1024, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=2304, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=1024, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (o_proj): lora.Linear(
+                (base_layer): Linear(in_features=2048, out_features=2304, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=2048, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=2304, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (rotary_emb): GemmaFixedRotaryEmbedding()
+            )
+            (mlp): Gemma2MLP(
+              (gate_proj): lora.Linear(
+                (base_layer): Linear(in_features=2304, out_features=9216, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=2304, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=9216, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (up_proj): lora.Linear(
+                (base_layer): Linear(in_features=2304, out_features=9216, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=2304, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=9216, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (down_proj): lora.Linear(
+                (base_layer): Linear(in_features=9216, out_features=2304, bias=False)
+                (lora_dropout): ModuleDict(
+                  (default): Identity()
+                )
+                (lora_A): ModuleDict(
+                  (default): Linear(in_features=9216, out_features=16, bias=False)
+                )
+                (lora_B): ModuleDict(
+                  (default): Linear(in_features=16, out_features=2304, bias=False)
+                )
+                (lora_embedding_A): ParameterDict()
+                (lora_embedding_B): ParameterDict()
+                (lora_magnitude_vector): ModuleDict()
+              )
+              (act_fn): PytorchGELUTanh()
+            )
+            (input_layernorm): Gemma2RMSNorm((2304,), eps=1e-06)
+            (post_attention_layernorm): Gemma2RMSNorm((2304,), eps=1e-06)
+            (pre_feedforward_layernorm): Gemma2RMSNorm((2304,), eps=1e-06)
+            (post_feedforward_layernorm): Gemma2RMSNorm((2304,), eps=1e-06)
+          )
+        )
+        (norm): Gemma2RMSNorm((2304,), eps=1e-06)
+      )
+      (lm_head): Linear(in_features=2304, out_features=256000, bias=False)
+    )
+  )
+)>
+Training completed in 1421.2591 seconds.
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fccc2724be0, execution_count=2 error_before_exec=None error_in_exec=None info=<ExecutionInfo object at 7fccc272f2b0, raw_cell="#%%
+trainer = SFTTrainer(
+    model=model,
+    to.." store_history=True silent=False shell_futures=True cell_id=vscode-notebook-cell:/Interactive-1.interactive#W2sdW50aXRsZWQ%3D> result=None>,),kwargs {}:
+Error in callback <bound method _WandbInit._resume_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for pre_run_cell), with arguments args (<ExecutionInfo object at 7fccc272f490, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None>,),kwargs {}:
+[{"name": "DATA_SEED", "type": "int", "fullType": "int"}, {"name": "Dataset", "type": "type", "fullType": "type"}, {"name": "FastLanguageModel", "type": "type", "fullType": "type"}, {"name": "SFTTrainer", "type": "type", "fullType": "type"}, {"name": "TrainingArguments", "type": "type", "fullType": "type"}, {"name": "dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "dtype", "type": "NoneType", "fullType": "NoneType"}, {"name": "full_synthetic_wmdp", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "get_ipython", "type": "function", "fullType": "function"}, {"name": "is_bfloat16_supported", "type": "function", "fullType": "function"}, {"name": "load_in_4bit", "type": "bool", "fullType": "bool"}, {"name": "max_seq_length", "type": "int", "fullType": "int"}, {"name": "model", "type": "PeftModelForCausalLM", "fullType": "peft.peft_model.PeftModelForCausalLM"}, {"name": "os", "type": "module", "fullType": "module"}, {"name": "pd", "type": "module", "fullType": "module"}, {"name": "tokenize_function_with_choices", "type": "function", "fullType": "function"}, {"name": "tokenized_dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "tokenizer", "type": "GemmaTokenizerFast", "fullType": "transformers.models.gemma.tokenization_gemma_fast.GemmaTokenizerFast"}, {"name": "torch", "type": "module", "fullType": "module"}, {"name": "train_data", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "trainer", "type": "SFTTrainer", "fullType": "trl.trainer.sft_trainer.SFTTrainer"}, {"name": "trainer_stats", "type": "TrainOutput", "fullType": "transformers.trainer_utils.TrainOutput"}, {"name": "use_bfloat16", "type": "bool", "fullType": "bool"}]
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fccc272fa00, execution_count=None error_before_exec=None error_in_exec=None info=<ExecutionInfo object at 7fccc272f490, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None> result=None>,),kwargs {}:
+Error in callback <bound method _WandbInit._resume_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for pre_run_cell), with arguments args (<ExecutionInfo object at 7fc9edae1900, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None>,),kwargs {}:
+[{"name": "DATA_SEED", "type": "int", "fullType": "int"}, {"name": "Dataset", "type": "type", "fullType": "type"}, {"name": "FastLanguageModel", "type": "type", "fullType": "type"}, {"name": "SFTTrainer", "type": "type", "fullType": "type"}, {"name": "TrainingArguments", "type": "type", "fullType": "type"}, {"name": "dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "dtype", "type": "NoneType", "fullType": "NoneType"}, {"name": "full_synthetic_wmdp", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "get_ipython", "type": "function", "fullType": "function"}, {"name": "is_bfloat16_supported", "type": "function", "fullType": "function"}, {"name": "load_in_4bit", "type": "bool", "fullType": "bool"}, {"name": "max_seq_length", "type": "int", "fullType": "int"}, {"name": "model", "type": "PeftModelForCausalLM", "fullType": "peft.peft_model.PeftModelForCausalLM"}, {"name": "os", "type": "module", "fullType": "module"}, {"name": "pd", "type": "module", "fullType": "module"}, {"name": "tokenize_function_with_choices", "type": "function", "fullType": "function"}, {"name": "tokenized_dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "tokenizer", "type": "GemmaTokenizerFast", "fullType": "transformers.models.gemma.tokenization_gemma_fast.GemmaTokenizerFast"}, {"name": "torch", "type": "module", "fullType": "module"}, {"name": "train_data", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "trainer", "type": "SFTTrainer", "fullType": "trl.trainer.sft_trainer.SFTTrainer"}, {"name": "trainer_stats", "type": "TrainOutput", "fullType": "transformers.trainer_utils.TrainOutput"}, {"name": "use_bfloat16", "type": "bool", "fullType": "bool"}]
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fc9edae3a30, execution_count=None error_before_exec=None error_in_exec=None info=<ExecutionInfo object at 7fc9edae1900, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None> result=None>,),kwargs {}:
+Error in callback <bound method _WandbInit._resume_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for pre_run_cell), with arguments args (<ExecutionInfo object at 7fccc272f820, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None>,),kwargs {}:
+[{"name": "DATA_SEED", "type": "int", "fullType": "int"}, {"name": "Dataset", "type": "type", "fullType": "type"}, {"name": "FastLanguageModel", "type": "type", "fullType": "type"}, {"name": "SFTTrainer", "type": "type", "fullType": "type"}, {"name": "TrainingArguments", "type": "type", "fullType": "type"}, {"name": "dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "dtype", "type": "NoneType", "fullType": "NoneType"}, {"name": "full_synthetic_wmdp", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "get_ipython", "type": "function", "fullType": "function"}, {"name": "is_bfloat16_supported", "type": "function", "fullType": "function"}, {"name": "load_in_4bit", "type": "bool", "fullType": "bool"}, {"name": "max_seq_length", "type": "int", "fullType": "int"}, {"name": "model", "type": "PeftModelForCausalLM", "fullType": "peft.peft_model.PeftModelForCausalLM"}, {"name": "os", "type": "module", "fullType": "module"}, {"name": "pd", "type": "module", "fullType": "module"}, {"name": "tokenize_function_with_choices", "type": "function", "fullType": "function"}, {"name": "tokenized_dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "tokenizer", "type": "GemmaTokenizerFast", "fullType": "transformers.models.gemma.tokenization_gemma_fast.GemmaTokenizerFast"}, {"name": "torch", "type": "module", "fullType": "module"}, {"name": "train_data", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "trainer", "type": "SFTTrainer", "fullType": "trl.trainer.sft_trainer.SFTTrainer"}, {"name": "trainer_stats", "type": "TrainOutput", "fullType": "transformers.trainer_utils.TrainOutput"}, {"name": "use_bfloat16", "type": "bool", "fullType": "bool"}]
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fccc272e620, execution_count=None error_before_exec=None error_in_exec=None info=<ExecutionInfo object at 7fccc272f820, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None> result=None>,),kwargs {}:
+Error in callback <bound method _WandbInit._resume_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for pre_run_cell), with arguments args (<ExecutionInfo object at 7fca1e5f3070, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None>,),kwargs {}:
+[{"name": "DATA_SEED", "type": "int", "fullType": "int"}, {"name": "Dataset", "type": "type", "fullType": "type"}, {"name": "FastLanguageModel", "type": "type", "fullType": "type"}, {"name": "SFTTrainer", "type": "type", "fullType": "type"}, {"name": "TrainingArguments", "type": "type", "fullType": "type"}, {"name": "dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "dtype", "type": "NoneType", "fullType": "NoneType"}, {"name": "full_synthetic_wmdp", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "get_ipython", "type": "function", "fullType": "function"}, {"name": "is_bfloat16_supported", "type": "function", "fullType": "function"}, {"name": "load_in_4bit", "type": "bool", "fullType": "bool"}, {"name": "max_seq_length", "type": "int", "fullType": "int"}, {"name": "model", "type": "PeftModelForCausalLM", "fullType": "peft.peft_model.PeftModelForCausalLM"}, {"name": "os", "type": "module", "fullType": "module"}, {"name": "pd", "type": "module", "fullType": "module"}, {"name": "tokenize_function_with_choices", "type": "function", "fullType": "function"}, {"name": "tokenized_dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "tokenizer", "type": "GemmaTokenizerFast", "fullType": "transformers.models.gemma.tokenization_gemma_fast.GemmaTokenizerFast"}, {"name": "torch", "type": "module", "fullType": "module"}, {"name": "train_data", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "trainer", "type": "SFTTrainer", "fullType": "trl.trainer.sft_trainer.SFTTrainer"}, {"name": "trainer_stats", "type": "TrainOutput", "fullType": "transformers.trainer_utils.TrainOutput"}, {"name": "use_bfloat16", "type": "bool", "fullType": "bool"}]
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fc9ed24b8e0, execution_count=None error_before_exec=None error_in_exec=None info=<ExecutionInfo object at 7fca1e5f3070, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None> result=None>,),kwargs {}:
+Error in callback <bound method _WandbInit._resume_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for pre_run_cell), with arguments args (<ExecutionInfo object at 7fc9ed2b2f80, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None>,),kwargs {}:
+[{"name": "DATA_SEED", "type": "int", "fullType": "int"}, {"name": "Dataset", "type": "type", "fullType": "type"}, {"name": "FastLanguageModel", "type": "type", "fullType": "type"}, {"name": "SFTTrainer", "type": "type", "fullType": "type"}, {"name": "TrainingArguments", "type": "type", "fullType": "type"}, {"name": "dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "dtype", "type": "NoneType", "fullType": "NoneType"}, {"name": "full_synthetic_wmdp", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "get_ipython", "type": "function", "fullType": "function"}, {"name": "is_bfloat16_supported", "type": "function", "fullType": "function"}, {"name": "load_in_4bit", "type": "bool", "fullType": "bool"}, {"name": "max_seq_length", "type": "int", "fullType": "int"}, {"name": "model", "type": "PeftModelForCausalLM", "fullType": "peft.peft_model.PeftModelForCausalLM"}, {"name": "os", "type": "module", "fullType": "module"}, {"name": "pd", "type": "module", "fullType": "module"}, {"name": "tokenize_function_with_choices", "type": "function", "fullType": "function"}, {"name": "tokenized_dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "tokenizer", "type": "GemmaTokenizerFast", "fullType": "transformers.models.gemma.tokenization_gemma_fast.GemmaTokenizerFast"}, {"name": "torch", "type": "module", "fullType": "module"}, {"name": "train_data", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "trainer", "type": "SFTTrainer", "fullType": "trl.trainer.sft_trainer.SFTTrainer"}, {"name": "trainer_stats", "type": "TrainOutput", "fullType": "transformers.trainer_utils.TrainOutput"}, {"name": "use_bfloat16", "type": "bool", "fullType": "bool"}]
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fc9ed2b0880, execution_count=None error_before_exec=None error_in_exec=None info=<ExecutionInfo object at 7fc9ed2b2f80, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None> result=None>,),kwargs {}:
+Error in callback <bound method _WandbInit._resume_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for pre_run_cell), with arguments args (<ExecutionInfo object at 7fc9ed3a9330, raw_cell="# %%
+# Step 5: Save the Fine-Tuned Model
+model.sav.." store_history=True silent=False shell_futures=True cell_id=vscode-notebook-cell:/Interactive-1.interactive#W3sdW50aXRsZWQ%3D>,),kwargs {}:
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fc9ed3a8e50, execution_count=3 error_before_exec=None error_in_exec=None info=<ExecutionInfo object at 7fc9ed3a9330, raw_cell="# %%
+# Step 5: Save the Fine-Tuned Model
+model.sav.." store_history=True silent=False shell_futures=True cell_id=vscode-notebook-cell:/Interactive-1.interactive#W3sdW50aXRsZWQ%3D> result=('./gemma-2-2b-it_full-precision/tokenizer_config.json', './gemma-2-2b-it_full-precision/special_tokens_map.json', './gemma-2-2b-it_full-precision/tokenizer.model', './gemma-2-2b-it_full-precision/added_tokens.json', './gemma-2-2b-it_full-precision/tokenizer.json')>,),kwargs {}:
+Error in callback <bound method _WandbInit._resume_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for pre_run_cell), with arguments args (<ExecutionInfo object at 7fccdba3e0e0, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None>,),kwargs {}:
+[{"name": "DATA_SEED", "type": "int", "fullType": "int"}, {"name": "Dataset", "type": "type", "fullType": "type"}, {"name": "FastLanguageModel", "type": "type", "fullType": "type"}, {"name": "SFTTrainer", "type": "type", "fullType": "type"}, {"name": "TrainingArguments", "type": "type", "fullType": "type"}, {"name": "dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "dtype", "type": "NoneType", "fullType": "NoneType"}, {"name": "full_synthetic_wmdp", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "get_ipython", "type": "function", "fullType": "function"}, {"name": "is_bfloat16_supported", "type": "function", "fullType": "function"}, {"name": "load_in_4bit", "type": "bool", "fullType": "bool"}, {"name": "max_seq_length", "type": "int", "fullType": "int"}, {"name": "model", "type": "PeftModelForCausalLM", "fullType": "peft.peft_model.PeftModelForCausalLM"}, {"name": "os", "type": "module", "fullType": "module"}, {"name": "pd", "type": "module", "fullType": "module"}, {"name": "tokenize_function_with_choices", "type": "function", "fullType": "function"}, {"name": "tokenized_dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "tokenizer", "type": "GemmaTokenizerFast", "fullType": "transformers.models.gemma.tokenization_gemma_fast.GemmaTokenizerFast"}, {"name": "torch", "type": "module", "fullType": "module"}, {"name": "train_data", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "trainer", "type": "SFTTrainer", "fullType": "trl.trainer.sft_trainer.SFTTrainer"}, {"name": "trainer_stats", "type": "TrainOutput", "fullType": "transformers.trainer_utils.TrainOutput"}, {"name": "use_bfloat16", "type": "bool", "fullType": "bool"}]
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fccdb9937c0, execution_count=None error_before_exec=None error_in_exec=None info=<ExecutionInfo object at 7fccdba3e0e0, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None> result=None>,),kwargs {}:
+Error in callback <bound method _WandbInit._resume_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for pre_run_cell), with arguments args (<ExecutionInfo object at 7fca7e37bbb0, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None>,),kwargs {}:
+[{"name": "DATA_SEED", "type": "int", "fullType": "int"}, {"name": "Dataset", "type": "type", "fullType": "type"}, {"name": "FastLanguageModel", "type": "type", "fullType": "type"}, {"name": "SFTTrainer", "type": "type", "fullType": "type"}, {"name": "TrainingArguments", "type": "type", "fullType": "type"}, {"name": "dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "dtype", "type": "NoneType", "fullType": "NoneType"}, {"name": "full_synthetic_wmdp", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "get_ipython", "type": "function", "fullType": "function"}, {"name": "is_bfloat16_supported", "type": "function", "fullType": "function"}, {"name": "load_in_4bit", "type": "bool", "fullType": "bool"}, {"name": "max_seq_length", "type": "int", "fullType": "int"}, {"name": "model", "type": "PeftModelForCausalLM", "fullType": "peft.peft_model.PeftModelForCausalLM"}, {"name": "os", "type": "module", "fullType": "module"}, {"name": "pd", "type": "module", "fullType": "module"}, {"name": "tokenize_function_with_choices", "type": "function", "fullType": "function"}, {"name": "tokenized_dataset_train", "type": "Dataset", "fullType": "datasets.arrow_dataset.Dataset"}, {"name": "tokenizer", "type": "GemmaTokenizerFast", "fullType": "transformers.models.gemma.tokenization_gemma_fast.GemmaTokenizerFast"}, {"name": "torch", "type": "module", "fullType": "module"}, {"name": "train_data", "type": "DataFrame", "fullType": "pandas.core.frame.DataFrame"}, {"name": "trainer", "type": "SFTTrainer", "fullType": "trl.trainer.sft_trainer.SFTTrainer"}, {"name": "trainer_stats", "type": "TrainOutput", "fullType": "transformers.trainer_utils.TrainOutput"}, {"name": "use_bfloat16", "type": "bool", "fullType": "bool"}]
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fc9ed210880, execution_count=None error_before_exec=None error_in_exec=None info=<ExecutionInfo object at 7fca7e37bbb0, raw_cell="def _VSCODE_getVariable(what_to_get, is_debugging,.." store_history=False silent=False shell_futures=True cell_id=None> result=None>,),kwargs {}:
+Error in callback <bound method _WandbInit._resume_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for pre_run_cell), with arguments args (<ExecutionInfo object at 7fccc272e2c0, raw_cell="# %%
+from sae_lens import SAE
+import torch as t
+f.." store_history=True silent=False shell_futures=True cell_id=vscode-notebook-cell:/Interactive-1.interactive#W4sdW50aXRsZWQ%3D>,),kwargs {}:
+WARNING:root:You tried to specify center_unembed=True for a model using logit softcap, but this can't be done! Softcapping is not invariant upon adding a constantSetting center_unembed=False instead.
+Error in callback <bound method _WandbInit._pause_backend of <wandb.sdk.wandb_init._WandbInit object at 0x7fccc2724fa0>> (for post_run_cell), with arguments args (<ExecutionResult object at 7fccc272f3a0, execution_count=4 error_before_exec=None error_in_exec=Repo id must be in the form 'repo_name' or 'namespace/repo_name': '/root/arena-capstone-saes/google/gemma-2-2b-it'. Use `repo_type` argument if needed. info=<ExecutionInfo object at 7fccc272e2c0, raw_cell="# %%
+from sae_lens import SAE
+import torch as t
