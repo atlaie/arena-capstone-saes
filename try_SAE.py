@@ -108,13 +108,17 @@ subset_dataset = tokenized_dataset_train.select(range(subset_size))
 # Create DataLoader with the subset
 batch_size = 32  # Adjust based on your GPU memory
 train_dataloader = DataLoader(
-    #subset_dataset,
-    tokenized_dataset_train,
+    subset_dataset,
+    #tokenized_dataset_train,
     batch_size=batch_size,
     shuffle=False,
     collate_fn=data_collator
 )
-
+#%%
+model.W_in[-1].shape, model.W_gate[-1].shape, model.W_out[-1].shape
+#%%
+feature_acts[:,-1].shape, sae.W_enc.shape, sae.W_dec.shape, model.W_out[-1].T.shape
+#%%
 def compute_errors(sae_in, feature_acts):
     # Flatten inputs and compute the mask for active features
     feature_acts = feature_acts.flatten(0,1)
@@ -138,11 +142,114 @@ def compute_errors(sae_in, feature_acts):
     # Return the mean squared reconstruction error and R^2
     return squared_residuals.mean(), r2
 
+import einops
+import random
+
+def compute_logit_attribution(model, sae_acts, correct_toks, incorrect_toks):
+    # Get logits in the "Correct - Incorrect" direction, of shape (4, d_model)
+    logit_direction = model.W_U.T[correct_toks] - model.W_U.T[incorrect_toks]
+    
+    # Get last (in seq) latent activations
+    sae_acts_post = sae_acts[:, -1]
+
+    # Calculate the residual contribution from the MLP (sae -> MLP activations -> residual)
+    sae_resid_dirs = einops.einsum(
+                                    sae_acts_post,
+                                    sae.W_dec,   # Decoder for the latent space back to the hidden dimensions
+                                    "batch d_sae, d_sae d_model -> batch d_sae d_model"
+                                    )
+
+    # Get DLA by computing average dot product of each latent's residual dir onto the logit dir
+    dla = (sae_resid_dirs * logit_direction[:, None, :]).sum(-1)
+
+    return dla
+#%%
+model.eval()
+sae.eval()
+num_features = sae.cfg.d_sae
+all_ranks = []
+all_rec_errors = []
+all_r2 = []
+total_samples = 0
+
+for batch in tqdm(train_dataloader, desc="Processing"):
+    # Move data to device
+    input_ids = batch["input_ids"].to(device)
+    batch_size = input_ids.size(0)
+    total_samples += batch_size
+
+    correct_toks = []
+    incorrect_toks = []
+
+    with torch.no_grad():
+        for i in range(batch_size):
+            # Retrieve the choices from the original examples (already tokenized)
+            question = dataset_train['question'][i]
+            choices = dataset_train['choices'][i]
+            answer_idx = dataset_train['answer'][i]
+
+            # Get the correct answer token (already tokenized in `labels`)
+            correct_answer = choices[answer_idx]
+            correct_token_ids = tokenizer.encode(correct_answer, truncation=True, max_length=512)
+
+            # Get a random incorrect answer token (make sure it's not the correct one)
+            incorrect_choices = [choice for j, choice in enumerate(choices) if j != answer_idx]
+            random_incorrect_answer = random.choice(incorrect_choices)
+            incorrect_token_ids = tokenizer.encode(random_incorrect_answer, truncation=True, max_length=512)
+
+            # Store correct and incorrect tokens for each sample
+            correct_toks.append(correct_token_ids[1])  
+            incorrect_toks.append(incorrect_token_ids[1])  
+
+
+        # Run model to get activations at the SAE layer
+        _, cache = model.run_with_cache(
+            input_ids,
+            names_filter=sae.cfg.hook_name,
+            prepend_bos=True
+        )
+
+        activations = cache[sae.cfg.hook_name]  # Shape: [batch_size, seq_len, hidden_size]
+        
+        # Encode activations using SAE
+        feature_acts = sae.encode(activations)  # Shape: [batch_size, seq_len, num_features]
+        
+        reconstruction_error, r2 = compute_errors(activations, feature_acts)
+        logit_attributions = compute_logit_attribution(model, feature_acts, correct_toks, incorrect_toks)
+        print(logit_attributions.shape)
+        # Get sorted indices (features sorted by decreasing activation)
+        sorted_indices = torch.argsort(-logit_attributions, dim=-1)  # Shape: [batch_size, num_features]
+
+        # Initialize ranks tensor with integer type
+        ranks = torch.zeros_like(sorted_indices)  # dtype will be torch.int64
+
+        # Create rank values (dtype will be torch.int64)
+        rank_values = torch.arange(num_features, device=device).unsqueeze(0).expand(batch_size, -1)
+
+        # Scatter rank values into ranks tensor
+
+        ranks.scatter_(dim=1, index=sorted_indices, src=rank_values)
+
+#%%
+logit_attributions.shape
+#%%
+ranks = torch.zeros_like(sorted_indices).unsqueeze(0).expand(batch_size, -1)
+ranks.shape
+rank_values.shape
+#ranks.scatter_(dim=1, index=sorted_indices, src=rank_values)
+#%%
+logit_attributions[10237]
+#%%
+import matplotlib.pyplot as plt
+import torch as t
+
+#plt.plot(logit_attributions.detach().cpu().numpy())
 
 #%%
 
 # Function to compute feature rank sums
 def compute_feature_ranks_per_sample(model, sae, dataloader, device):
+
     model.eval()
     sae.eval()
     num_features = sae.cfg.d_sae
@@ -157,7 +264,28 @@ def compute_feature_ranks_per_sample(model, sae, dataloader, device):
         batch_size = input_ids.size(0)
         total_samples += batch_size
 
+        correct_toks = []
+        incorrect_toks = []
+
         with torch.no_grad():
+            for i in range(batch_size):
+                # Retrieve the choices from the original examples (already tokenized)
+                choices = dataset_train['choices'][i]
+                answer_idx = dataset_train['answer'][i]
+
+                # Get the correct answer token (already tokenized in `labels`)
+                correct_answer = choices[answer_idx]
+                correct_token_ids = tokenizer.encode(correct_answer, truncation=True, max_length=512)
+
+                # Get a random incorrect answer token (make sure it's not the correct one)
+                incorrect_choices = [choice for j, choice in enumerate(choices) if j != answer_idx]
+                random_incorrect_answer = random.choice(incorrect_choices)
+                incorrect_token_ids = tokenizer.encode(random_incorrect_answer, truncation=True, max_length=512)
+
+                # Store correct and incorrect tokens for each sample
+                correct_toks.append(correct_token_ids[1])  
+                incorrect_toks.append(incorrect_token_ids[1])  
+
             # Run model to get activations at the SAE layer
             _, cache = model.run_with_cache(
                 input_ids,
@@ -172,11 +300,13 @@ def compute_feature_ranks_per_sample(model, sae, dataloader, device):
             
             reconstruction_error, r2 = compute_errors(activations, feature_acts)
 
+            logit_attributions = compute_logit_attribution(model, feature_acts, correct_toks, incorrect_toks)
+
             # Aggregate activations over positions (e.g., take max over seq_len)
-            max_feature_acts = feature_acts.max(dim=1).values  # Shape: [batch_size, num_features]
+            #max_feature_acts = feature_acts.max(dim=1).values  # Shape: [batch_size, num_features]
 
             # Get sorted indices (features sorted by decreasing activation)
-            sorted_indices = torch.argsort(-max_feature_acts, dim=-1)  # Shape: [batch_size, num_features]
+            sorted_indices = torch.argsort(-logit_attributions, dim=-1)  # Shape: [batch_size, num_features]
 
             # Initialize ranks tensor with integer type
             ranks = torch.zeros_like(sorted_indices)  # dtype will be torch.int64
@@ -224,7 +354,7 @@ import cmcrameri as cmc
 idx_order = np.argsort(np.mean(feature_ranking.detach().cpu().numpy(), axis = 0))
 f_rank = feature_ranking[:, idx_order].detach().cpu().numpy()
 #%%
-sns.heatmap(f_rank, cmap = 'cmc.lapaz', cbar_kws={'label':'Activation-based Rank'})
+sns.heatmap(f_rank, cmap = 'cmc.lapaz', cbar_kws={'label':'DLA-based Rank'})
 plt.xlabel('SAE latent #')
 plt.ylabel('Dataset sample #')
 plt.tight_layout()
@@ -276,8 +406,8 @@ def identify_neurons_from_sae(sae, idx_order, top_k = 20, percentile = 99):
     # Select the rows of W_dec corresponding to the top latents
     top_latent_weights = sae.W_dec[idx_order[:top_k], :]  # Shape: [20, 2304]
     
-    # Sum the absolute values of the weights across the top latents
-    # This gives us a measure of how much each neuron in the hidden layer is influenced
+    # L0 measure of the weights across the top latents, as a measure of how much each 
+    # neuron in the hidden layer is influenced by these SAE latents.
     neuron_importance = top_latent_weights.abs().sum(dim=0)  # Shape: [2304]
     
     perc = np.percentile(neuron_importance.detach().cpu().numpy(), percentile)
