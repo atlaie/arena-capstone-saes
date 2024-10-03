@@ -108,16 +108,12 @@ subset_dataset = tokenized_dataset_train.select(range(subset_size))
 # Create DataLoader with the subset
 batch_size = 32  # Adjust based on your GPU memory
 train_dataloader = DataLoader(
-    subset_dataset,
-    #tokenized_dataset_train,
+    #subset_dataset,
+    tokenized_dataset_train,
     batch_size=batch_size,
     shuffle=False,
     collate_fn=data_collator
 )
-#%%
-model.W_in[-1].shape, model.W_gate[-1].shape, model.W_out[-1].shape
-#%%
-feature_acts[:,-1].shape, sae.W_enc.shape, sae.W_dec.shape, model.W_out[-1].T.shape
 #%%
 def compute_errors(sae_in, feature_acts):
     # Flatten inputs and compute the mask for active features
@@ -163,87 +159,13 @@ def compute_logit_attribution(model, sae_acts, correct_toks, incorrect_toks):
     dla = (sae_resid_dirs * logit_direction[:, None, :]).sum(-1)
 
     return dla
-#%%
-model.eval()
-sae.eval()
-num_features = sae.cfg.d_sae
-all_ranks = []
-all_rec_errors = []
-all_r2 = []
-total_samples = 0
-
-for batch in tqdm(train_dataloader, desc="Processing"):
-    # Move data to device
-    input_ids = batch["input_ids"].to(device)
-    batch_size = input_ids.size(0)
-    total_samples += batch_size
-
-    correct_toks = []
-    incorrect_toks = []
-
-    with torch.no_grad():
-        for i in range(batch_size):
-            # Retrieve the choices from the original examples (already tokenized)
-            question = dataset_train['question'][i]
-            choices = dataset_train['choices'][i]
-            answer_idx = dataset_train['answer'][i]
-
-            # Get the correct answer token (already tokenized in `labels`)
-            correct_answer = choices[answer_idx]
-            correct_token_ids = tokenizer.encode(correct_answer, truncation=True, max_length=512)
-
-            # Get a random incorrect answer token (make sure it's not the correct one)
-            incorrect_choices = [choice for j, choice in enumerate(choices) if j != answer_idx]
-            random_incorrect_answer = random.choice(incorrect_choices)
-            incorrect_token_ids = tokenizer.encode(random_incorrect_answer, truncation=True, max_length=512)
-
-            # Store correct and incorrect tokens for each sample
-            correct_toks.append(correct_token_ids[1])  
-            incorrect_toks.append(incorrect_token_ids[1])  
 
 
-        # Run model to get activations at the SAE layer
-        _, cache = model.run_with_cache(
-            input_ids,
-            names_filter=sae.cfg.hook_name,
-            prepend_bos=True
-        )
-
-        activations = cache[sae.cfg.hook_name]  # Shape: [batch_size, seq_len, hidden_size]
-        
-        # Encode activations using SAE
-        feature_acts = sae.encode(activations)  # Shape: [batch_size, seq_len, num_features]
-        
-        reconstruction_error, r2 = compute_errors(activations, feature_acts)
-        logit_attributions = compute_logit_attribution(model, feature_acts, correct_toks, incorrect_toks)
-        print(logit_attributions.shape)
-        # Get sorted indices (features sorted by decreasing activation)
-        sorted_indices = torch.argsort(-logit_attributions, dim=-1)  # Shape: [batch_size, num_features]
-
-        # Initialize ranks tensor with integer type
-        ranks = torch.zeros_like(sorted_indices)  # dtype will be torch.int64
-
-        # Create rank values (dtype will be torch.int64)
-        rank_values = torch.arange(num_features, device=device).unsqueeze(0).expand(batch_size, -1)
-
-        # Scatter rank values into ranks tensor
-
-        ranks.scatter_(dim=1, index=sorted_indices, src=rank_values)
-
-#%%
-logit_attributions.shape
-#%%
-ranks = torch.zeros_like(sorted_indices).unsqueeze(0).expand(batch_size, -1)
-ranks.shape
-rank_values.shape
-#ranks.scatter_(dim=1, index=sorted_indices, src=rank_values)
-#%%
-logit_attributions[10237]
 #%%
 import matplotlib.pyplot as plt
 import torch as t
 
-#plt.plot(logit_attributions.detach().cpu().numpy())
+plt.plot(logit_attributions[0,:].detach().cpu().numpy())
 
 #%%
 
@@ -325,6 +247,9 @@ def compute_feature_ranks_per_sample(model, sae, dataloader, device):
 
             # Clean up to free memory
             del cache, feature_acts, activations, reconstruction_error, r2
+        
+        #Free some more memory
+        input_ids.to('cpu')
 
     # Concatenate all ranks along 0th dimension
     ranks_matrix = torch.cat(all_ranks, dim=0)  # Shape: [n_samples, num_features]
@@ -333,7 +258,6 @@ def compute_feature_ranks_per_sample(model, sae, dataloader, device):
 
     return ranks_matrix, rec_errors, r2s
 
-
 # Run computation
 feature_ranking, rec_errors, r2s = compute_feature_ranks_per_sample(
     model=model,
@@ -341,6 +265,7 @@ feature_ranking, rec_errors, r2s = compute_feature_ranks_per_sample(
     dataloader=train_dataloader,
     device=device
 )
+idx_order = np.argsort(np.mean(feature_ranking.detach().cpu().numpy(), axis = 0))
 
 #%%
 import seaborn as sns
@@ -351,7 +276,6 @@ plt.xlabel(r"$R_{SAE \rightarrow MLP}^2$")
 #%%
 import seaborn as sns
 import cmcrameri as cmc
-idx_order = np.argsort(np.mean(feature_ranking.detach().cpu().numpy(), axis = 0))
 f_rank = feature_ranking[:, idx_order].detach().cpu().numpy()
 #%%
 sns.heatmap(f_rank, cmap = 'cmc.lapaz', cbar_kws={'label':'DLA-based Rank'})
@@ -432,7 +356,7 @@ def ablate_neurons_in_model(model, important_neurons):
 
 #%%
 weights_1 = model_transformers.model.layers[-1].mlp.down_proj.weight
-important_neurons = identify_neurons_from_sae(sae, idx_order, top_k = 20, percentile=99)
+important_neurons = identify_neurons_from_sae(sae, idx_order, top_k = 50, percentile=95)
 important_neurons_random = np.random.choice(important_neurons.shape[0], size = important_neurons.shape[0], replace = False)
 model_ablated = ablate_neurons_in_model(model_transformers, important_neurons)
 model_ablated_random = ablate_neurons_in_model(model_transformers, important_neurons_random)
@@ -462,6 +386,8 @@ plt.tight_layout()
 #%%
 weights_ablated.shape
 #%%
+import seaborn as sns
+import matplotlib.pyplot as plt
 top_latent_weights = sae.W_dec[important_neurons, :]  # Shape: [20, 2304]
     
 # Sum the absolute values of the weights across the top latents
@@ -469,7 +395,7 @@ top_latent_weights = sae.W_dec[important_neurons, :]  # Shape: [20, 2304]
 neuron_importance = top_latent_weights.abs().sum(dim=0)  # Shape: [2304]
 sns.histplot(data = neuron_importance.detach().cpu().numpy(),
               bins = 50, kde = True, alpha = 0.7, color = 'grey', linewidth = 0.5)
-perc = np.percentile(neuron_importance.detach().cpu().numpy(), 99)
+perc = np.percentile(neuron_importance.detach().cpu().numpy(), 95)
 plt.axvline(perc, color = 'black')
 plt.xlabel(r"Importance $(||W_{SAE\rightarrow Neuron}||_0)$")
 sns.despine()
