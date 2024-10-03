@@ -16,10 +16,8 @@ tokenizer = AutoTokenizer.from_pretrained('google/gemma-2-2b-it')
 
 # Load the SAE
 sae, cfg_dict, sparsity = SAE.from_pretrained(
-    #release="gemma-scope-2b-pt-res-canonical",
     release="gemma-scope-2b-pt-mlp",
-    #sae_id="layer_25/width_16k/canonical",
-    sae_id="layer_12/width_16k/average_l0_262",
+    sae_id="layer_24/width_16k/average_l0_357",
     device=device
 )
 
@@ -100,7 +98,7 @@ data_collator = DataCollatorForSeq2Seq(
 )
 
 # Define the subset size
-subset_size = 1024  # Adjust this number as needed
+subset_size = len(tokenized_dataset_train)  # Adjust this number as needed
 
 # Select a subset of the dataset
 subset_dataset = tokenized_dataset_train.select(range(subset_size))
@@ -108,8 +106,8 @@ subset_dataset = tokenized_dataset_train.select(range(subset_size))
 # Create DataLoader with the subset
 batch_size = 32  # Adjust based on your GPU memory
 train_dataloader = DataLoader(
-    #subset_dataset,
-    tokenized_dataset_train,
+    subset_dataset,
+    #tokenized_dataset_train,
     batch_size=batch_size,
     shuffle=False,
     collate_fn=data_collator
@@ -356,10 +354,12 @@ def ablate_neurons_in_model(model, important_neurons, layer):
 
 #%%
 #weights_1 = model_transformers.model.layers[-1].mlp.down_proj.weight
+
+layer = 24
 important_neurons = identify_neurons_from_sae(sae, idx_order, top_k = 50, percentile=95)
 important_neurons_random = np.random.choice(important_neurons.shape[0], size = important_neurons.shape[0], replace = False)
-model_ablated = ablate_neurons_in_model(model_transformers, important_neurons, layer = 12)
-model_ablated_random = ablate_neurons_in_model(model_transformers, important_neurons_random, layer = 12)
+model_ablated = ablate_neurons_in_model(model_transformers, important_neurons, layer = layer)
+model_ablated_random = ablate_neurons_in_model(model_transformers, important_neurons_random, layer = layer)
 #weights_ablated = model_ablated.model.layers[-1].mlp.down_proj.weight
 #%%
 important_neurons.shape

@@ -105,7 +105,7 @@ train_dataloader = DataLoader(
     shuffle=False,
     collate_fn=data_collator
 )
-#%%
+
 import einops
 import torch as t
 
@@ -121,12 +121,12 @@ def compute_logit_attribution(model, layer_activations, correct_toks, incorrect_
     dla = einops.einsum(layer_acts_post, logit_direction, 'b d_model, b d_model -> d_model')
 
     return dla
-#%%
+
 all_layers = []
 for elem in list(model.named_modules()):
     all_layers.append(elem[0])
 
-#%%
+
 def filter_out_substrings(input_list, substring):
     return [s for s in input_list if substring in s]
 
@@ -183,32 +183,32 @@ for batch in tqdm(train_dataloader, desc="Processing"):
 import seaborn as sns
 import cmcrameri as cmc
 import matplotlib.pyplot as plt
-sorted_logits = np.mean(np.sort(all_logits.detach().cpu().numpy(), axis = -1)[...,-20:], axis = 0)
+sorted_logits = np.mean(np.sort(all_logits.detach().cpu().numpy(), axis = -1)[...,-50:], axis = 0)
 plt.subplots(figsize = (6,5))
 palette = sns.color_palette('cmc.managua', n_colors=sorted_logits.shape[0])  # Seaborn palette
 # Create a list of x values (Layer #) and corresponding medians
 layer_indices = np.arange(sorted_logits.shape[0])  # X values are the layer indices
-median_values = np.median(sorted_logits, axis=1)   # Y values are the medians per layer
+median_values = np.mean(sorted_logits, axis=1)   # Y values are the means per layer
 
 # Plot each point with a specific color from the palette (including individual logits)
 for i, logit in enumerate(sorted_logits):
     plt.semilogy(i + 0.1 * np.random.random(size=sorted_logits.shape[1]), logit, 'o', 
                  mec=palette[i], mfc='white', alpha=0.7)
 
-# Plot the medians with black markers
-for i, median_val in enumerate(median_values):
-    if i == np.argmax(median_values):
+# Plot the means with black markers
+for i, mean_val in enumerate(mean_values):
+    if i == np.argmax(mean_values):
         mss = 12
         mfcs = sns.desaturate('orange', 0.6)
     else:
         mss = 7
         mfcs = 'grey'
-    plt.semilogy(i, median_val, 'o', mec='black', mfc=mfcs, ms=mss)
+    plt.semilogy(i, mean_val, 'o', mec='black', mfc=mfcs, ms=mss)
 
 # Set y-axis to log scale
 plt.yscale('log')
-# Fit and plot the linear regression to the medians only
-sns.regplot(x=layer_indices, y=median_values, scatter=False, ci=90, color='grey', truncate=False)
+# Fit and plot the linear regression to the means only
+sns.regplot(x=layer_indices, y=mean_values, scatter=False, ci=90, color='grey', truncate=False)
 plt.xlabel('Layer #', fontsize = 14)
 plt.ylabel('Direct Logit Attribution', fontsize = 14)
 plt.yticks(fontsize = 12)
@@ -216,7 +216,7 @@ plt.xticks(fontsize = 12)
 plt.ylim(1, 3e2)
 sns.despine()
 plt.tight_layout()
-plt.savefig('LogitAttribution_MLPlayers_03102024.svg', transparent = True)
+#plt.savefig('LogitAttribution_MLPlayers_03102024.svg', transparent = True)
 #%%
 
 
