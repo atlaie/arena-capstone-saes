@@ -14,18 +14,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = HookedTransformer.from_pretrained("google/gemma-2-2b-it", device=device)
 tokenizer = AutoTokenizer.from_pretrained('google/gemma-2-2b-it')
 
-# Load the SAE
-sae, cfg_dict, sparsity = SAE.from_pretrained(
-    #release="gemma-scope-2b-pt-res-canonical",
-    release="gemma-scope-2b-pt-mlp",
-    #sae_id="layer_25/width_16k/canonical",
-    sae_id="layer_12/width_16k/average_l0_262",
-    device=device
-)
 
-#%%
 from torch.utils.data import DataLoader
-
+import random
 # Load and process the sWMDP Dataset
 full_synthetic_wmdp = pd.read_csv("full_synthetic_wmdp.csv")
 
@@ -108,73 +99,134 @@ subset_dataset = tokenized_dataset_train.select(range(subset_size))
 # Create DataLoader with the subset
 batch_size = 32  # Adjust based on your GPU memory
 train_dataloader = DataLoader(
-    #subset_dataset,
-    tokenized_dataset_train,
+    subset_dataset,
+    #tokenized_dataset_train,
     batch_size=batch_size,
     shuffle=False,
     collate_fn=data_collator
 )
 #%%
-def compute_errors(sae_in, feature_acts):
-    # Flatten inputs and compute the mask for active features
-    feature_acts = feature_acts.flatten(0,1)
-    fired_mask = feature_acts.sum(dim=-1) > 0
-
-    # Perform reconstruction
-    reconstruction = feature_acts[fired_mask] @ sae.W_dec
-
-    # Compute the reconstruction error (Sum of Squared Residuals, SSR)
-    squared_residuals = (reconstruction - sae_in.flatten(0,1)[fired_mask]) ** 2
-    ssr = squared_residuals.sum()
-
-    # Compute the total variance of the original input (Total Sum of Squares, TSS)
-    sae_in_flattened = sae_in.flatten(0,1)[fired_mask]
-    mean_sae_in = sae_in_flattened.mean(dim=0)
-    tss = ((sae_in_flattened - mean_sae_in) ** 2).sum()
-
-    # Compute R^2
-    r2 = 1 - ssr / tss
-
-    # Return the mean squared reconstruction error and R^2
-    return squared_residuals.mean(), r2
-
 import einops
-import random
+import torch as t
 
-def compute_logit_attribution(model, sae_acts, correct_toks, incorrect_toks):
+def compute_logit_attribution(model, layer_activations, correct_toks, incorrect_toks):
     # Get logits in the "Correct - Incorrect" direction, of shape (4, d_model)
     logit_direction = model.W_U.T[correct_toks] - model.W_U.T[incorrect_toks]
     
-    # Get last (in seq) latent activations
-    sae_acts_post = sae_acts[:, -1]
+    # Get the last (in seq) layer activations from the model
+    layer_acts_post = layer_activations[:, -1]  # Shape: [batch_size, d_model]
 
-    # Calculate the residual contribution from the MLP (sae -> MLP activations -> residual)
-    sae_resid_dirs = einops.einsum(
-                                    sae_acts_post,
-                                    sae.W_dec,   # Decoder for the latent space back to the hidden dimensions
-                                    "batch d_sae, d_sae d_model -> batch d_sae d_model"
-                                    )
-
-    # Get DLA by computing average dot product of each latent's residual dir onto the logit dir
-    dla = (sae_resid_dirs * logit_direction[:, None, :]).sum(-1)
+    # Get DLA by computing the dot product of the residual directions onto the logit direction
+    # Shape: [batch_size, d_sae]
+    dla = einops.einsum(layer_acts_post, logit_direction, 'b d_model, b d_model -> d_model')
 
     return dla
-
+#%%
+all_layers = []
+for elem in list(model.named_modules()):
+    all_layers.append(elem[0])
 
 #%%
+def filter_out_substrings(input_list, substring):
+    return [s for s in input_list if substring in s]
+
+model.eval()
+all_ranks = []
+all_rec_errors = []
+all_r2 = []
+total_samples = 0
+counter = 0
+mlp_names = filter_out_substrings(all_layers, 'hook_mlp_out')
+all_logits = t.zeros((int(len(subset_dataset)/batch_size),len(mlp_names), model.cfg.d_model))
+for batch in tqdm(train_dataloader, desc="Processing"):
+    # Move data to device
+    input_ids = batch["input_ids"].to(device)
+    batch_size = input_ids.size(0)
+    total_samples += batch_size
+
+    correct_toks = []
+    incorrect_toks = []
+
+    with torch.no_grad():
+        for i in range(batch_size):
+            # Retrieve the choices from the original examples (already tokenized)
+            choices = dataset_train['choices'][i]
+            answer_idx = dataset_train['answer'][i]
+
+            # Get the correct answer token (already tokenized in `labels`)
+            correct_answer = choices[answer_idx]
+            correct_token_ids = tokenizer.encode(correct_answer, truncation=True, max_length=512)
+
+            # Get a random incorrect answer token (make sure it's not the correct one)
+            incorrect_choices = [choice for j, choice in enumerate(choices) if j != answer_idx]
+            random_incorrect_answer = random.choice(incorrect_choices)
+            incorrect_token_ids = tokenizer.encode(random_incorrect_answer, truncation=True, max_length=512)
+
+            # Store correct and incorrect tokens for each sample
+            correct_toks.append(correct_token_ids[1])  
+            incorrect_toks.append(incorrect_token_ids[1])  
+
+        # Run model to get activations at the SAE layer
+        _, cache = model.run_with_cache(
+            input_ids,
+            prepend_bos=True
+        )
+        
+        logits = t.zeros((len(mlp_names), model.cfg.d_model))
+        for ii, name in enumerate(mlp_names):
+            activations = cache[name]  # Shape: [batch_size, seq_len, hidden_size]
+        
+            all_logits[counter, ii,:] = compute_logit_attribution(model, activations, correct_toks, incorrect_toks)
+    counter += 1
+
+#%%
+import seaborn as sns
+import cmcrameri as cmc
 import matplotlib.pyplot as plt
-import torch as t
+sorted_logits = np.mean(np.sort(all_logits.detach().cpu().numpy(), axis = -1)[...,-20:], axis = 0)
+plt.subplots(figsize = (6,5))
+palette = sns.color_palette('cmc.managua', n_colors=sorted_logits.shape[0])  # Seaborn palette
+# Create a list of x values (Layer #) and corresponding medians
+layer_indices = np.arange(sorted_logits.shape[0])  # X values are the layer indices
+median_values = np.median(sorted_logits, axis=1)   # Y values are the medians per layer
 
-plt.plot(logit_attributions[0,:].detach().cpu().numpy())
+# Plot each point with a specific color from the palette (including individual logits)
+for i, logit in enumerate(sorted_logits):
+    plt.semilogy(i + 0.1 * np.random.random(size=sorted_logits.shape[1]), logit, 'o', 
+                 mec=palette[i], mfc='white', alpha=0.7)
 
+# Plot the medians with black markers
+for i, median_val in enumerate(median_values):
+    if i == np.argmax(median_values):
+        mss = 12
+        mfcs = sns.desaturate('orange', 0.6)
+    else:
+        mss = 7
+        mfcs = 'grey'
+    plt.semilogy(i, median_val, 'o', mec='black', mfc=mfcs, ms=mss)
+
+# Set y-axis to log scale
+plt.yscale('log')
+# Fit and plot the linear regression to the medians only
+sns.regplot(x=layer_indices, y=median_values, scatter=False, ci=90, color='grey', truncate=False)
+plt.xlabel('Layer #', fontsize = 14)
+plt.ylabel('Direct Logit Attribution', fontsize = 14)
+plt.yticks(fontsize = 12)
+plt.xticks(fontsize = 12)
+plt.ylim(1, 3e2)
+sns.despine()
+plt.tight_layout()
+plt.savefig('LogitAttribution_MLPlayers_03102024.svg', transparent = True)
 #%%
 
+
+cache[filter_out_substrings(cache.keys(), 'mlp.hook_post')[0]]
+#%%
+import random
 # Function to compute feature rank sums
 def compute_feature_ranks_per_sample(model, sae, dataloader, device):
 
     model.eval()
-    sae.eval()
-    num_features = sae.cfg.d_sae
     all_ranks = []
     all_rec_errors = []
     all_r2 = []
@@ -214,15 +266,12 @@ def compute_feature_ranks_per_sample(model, sae, dataloader, device):
                 names_filter=sae.cfg.hook_name,
                 prepend_bos=True
             )
-
-            activations = cache[sae.cfg.hook_name]  # Shape: [batch_size, seq_len, hidden_size]
+            logits = []
+            for ii, name in enumerate(filter_out_substrings(cache.keys(), 'mlp.hook_post')):
+                activations = cache[sae.cfg.hook_name]  # Shape: [batch_size, seq_len, hidden_size]
             
-            # Encode activations using SAE
-            feature_acts = sae.encode(activations)  # Shape: [batch_size, seq_len, num_features]
-            
-            reconstruction_error, r2 = compute_errors(activations, feature_acts)
-
-            logit_attributions = compute_logit_attribution(model, feature_acts, correct_toks, incorrect_toks)
+                logit_attributions = compute_logit_attribution(model, activations, correct_toks, incorrect_toks)
+                logits.append(logit_attributions)
 
             # Aggregate activations over positions (e.g., take max over seq_len)
             #max_feature_acts = feature_acts.max(dim=1).values  # Shape: [batch_size, num_features]
