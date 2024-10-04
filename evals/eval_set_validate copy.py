@@ -8,11 +8,8 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 
 RUN_NUMBER = 0
-
-#%%
 
 def extract_data_from_json(file_path):
     with open(file_path, 'r') as file:

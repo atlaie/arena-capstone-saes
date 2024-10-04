@@ -19,7 +19,7 @@ fast_string = "fast-" if fast else ""
 use_ratio = True
 ratio = 0.01
 max_sample = 'inf' # max sample puts  acap on the ratio if it is used
-min_sample = 352 # min_sample takes priority over everything else
+min_sample = 512 # min_sample takes priority over everything else
 with open('eval_config.json', 'w') as f:
     json.dump({'use_ratio':use_ratio, 'ratio':ratio, 'max_sample':max_sample, 'min_sample':min_sample}, f)
 
@@ -58,13 +58,20 @@ def process_json_files(directory):
 
 #%%
 # run evals
-models = ['gemma-2-2b-it-wmdp/gemma-2-2b-it-wmdp-random_ablated']
-models += ['gemma-2-2b-it-wmdp/gemma-2-2b-it-wmdp-target_ablated']
-models += ['gemma-2-2b-it']
+# models = ['gemma-2-2b-it-wmdp/gemma-2-2b-it-wmdp-allMLPs_ablated']
+models = ['gemma-2-2b-it-wmdp-target_ablated_SUSS']
+# models = ['gemma-2-2b-it-wmdp/gemma-2-2b-it-wmdp-target_ablated']
+# models += ['gemma-2-2b-it-wmdp/gemma-2-2b-it-wmdp-random_ablated']
+# models += ['gemma-2-2b-it'] # don't need baseline?
 
 df = pd.DataFrame()
-tasks = ["wmdp_fast.py","arc_fast.py","gpqa_fast.py","mmlu_fast.py","mmlu-pro_fast.py"] if fast else ["wmdp.py","arc.py","gpqa.py","mmlu.py","mmlu-pro.py"]
+tasks = ["wmdp_fast.py"]
+# tasks = ["wmdp_fast.py","arc_fast.py","gpqa_fast.py","mmlu_fast.py"] if fast else ["wmdp.py","arc.py","gpqa.py","mmlu.py"]
 
+
+# results = process_json_files('logs-validation-full-0/gemma-2-2b-it')
+# df = pd.concat([df, results])
+# df.dropna(inplace=True)
 
 for model in models:
     log_dir = "logs-validation-full-" + fast_string + str(RUN_NUMBER) + "/" + model.split('/')[-1]
@@ -84,22 +91,20 @@ for model in models:
 df['model_name'] = df['model_path'].apply(lambda x: x.split('/')[-1] if pd.notna(x) else 'Unknown')
 df['samples'] = df['samples'].astype(int)
 print(df[['model_name','task','samples','accuracy','stderr']])
-RUN_NUMBER += 1
-
-#%%
 
 df_sorted = df[['task','model_name','samples','accuracy','stderr']].sort_values(by='task')
-#%%
 
 df = df.replace({
     "gemma-2-2b-it-wmdp-random_ablated":"ablated_random",
     "gemma-2-2b-it-wmdp-target_ablated":"ablated_target",
-    "gemma-2-2b-it":"base_instruct"
+    # "gemma-2-2b-it-wmdp-layer_ablated":"ablated_target",
+    "gemma-2-2b-it":"base_instruct",
                  })
 results = df[['task','model_name','accuracy','stderr']].sort_values(by='task')
 
 # Define custom sorting for 'task' and 'model_name' columns
-task_order = ['arc_easy', 'arc_challenge', 'gpqa_diamond', 'mmlu', 'wmdp']
+task_order = ['wmdp_bio', 'wmdp_cyber', 'wmdp_chem']
+# task_order = ['arc_easy', 'arc_challenge', 'gpqa_diamond', 'mmlu', 'wmdp_bio', 'wmdp_cyber', 'wmdp_chem']
 model_order = ['base_instruct','ablated_random', 'ablated_target']
 
 # Convert columns to categorical types with custom order
@@ -108,16 +113,23 @@ results['model_name'] = pd.Categorical(results['model_name'], categories=model_o
 
 results['stderr'] = pd.to_numeric(results['stderr'], errors='coerce')
 
-
-print(results)
-
 custom_palette = {
     'base_instruct': '#A6C1E3',   # Low saturation blue
     'ablated_random': '#FFD4A3',  # Low saturation orange
     'ablated_target': '#FF8C42'   # More saturated orange
 }
+#%%
 
-
+# plt.figure(figsize=(12, 6))
+# ax = sns.barplot(data=results, 
+#             x='task', 
+#             y='accuracy', 
+#             hue='model_name',
+#             palette=custom_palette,
+#             # yerr=results['stderr'].values
+#             # yerr='stderr'
+#             )
+#%%
 plt.figure(figsize=(12, 6))
 ax = sns.barplot(data=results, 
             x='task', 
@@ -127,11 +139,7 @@ ax = sns.barplot(data=results,
             # yerr=results['stderr'].values
             # yerr='stderr'
             )
-
-## Data labels
-# ax.bar_label(ax.containers[0])
-# ax.bar_label(ax.containers[1])
-# ax.bar_label(ax.containers[2])
+ax.errorbar(x = results['task'], y = results['accuracy'], yerr = results['stderr'], ls = '-')
     
 # Customize labels and title
 plt.xlabel('Task')
@@ -140,7 +148,10 @@ plt.title('Accuracy by Task and Model Name')
 plt.legend(title='Model Name')
 
 # Show plot
+#plt.savefig("logs-validation-full-" + fast_string + str(RUN_NUMBER) + "/" + "results.png")
 plt.show()
+
+RUN_NUMBER += 1
 # %%
 
 

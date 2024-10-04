@@ -28,19 +28,6 @@ def record_to_sample(record):
         target=target
     )
     
-dataset = hf_dataset(
-            path="cais/wmdp",
-            name="wmdp-bio",
-            split="test",
-            sample_fields=record_to_sample,
-            shuffle=True
-        )
-
-with open('eval_config.json', 'r') as file:
-        cfg = json.load(file)
-if cfg['use_ratio']:
-    cfg['max_sample'] = int(min(len(dataset)*cfg['ratio'], float(cfg['max_sample'])))
-dataset = dataset[:max(cfg['max_sample'], cfg['min_sample'])]
 
 # template=
 #              """
@@ -83,6 +70,26 @@ dataset = dataset[:max(cfg['max_sample'], cfg['min_sample'])]
 #                 """
 
 def wmdp_task(dataset_name):
+    dataset = hf_dataset(
+            path="cais/wmdp",
+            name=dataset_name,
+            split="test",
+            sample_fields=record_to_sample,
+            shuffle=True
+        )
+    # dataset = hf_dataset(
+    #             path="cais/wmdp",
+    #             name="wmdp-bio",
+    #             split="test",
+    #             sample_fields=record_to_sample,
+    #             shuffle=True
+    #         )
+
+    with open('eval_config.json', 'r') as file:
+            cfg = json.load(file)
+    if cfg['use_ratio']:
+        cfg['max_sample'] = int(min(len(dataset)*cfg['ratio'], float(cfg['max_sample'])))
+    dataset = dataset[:max(cfg['max_sample'], cfg['min_sample'])]
     return Task(
         dataset=dataset,
         solver=multiple_choice(),
@@ -91,7 +98,15 @@ def wmdp_task(dataset_name):
 
 
 @task
-def wmdp():
+def wmdp_bio():
     return wmdp_task("wmdp-bio")
+
+# @task
+# def wmdp_chem():
+#     return wmdp_task("wmdp-chem")
+
+# @task
+# def wmdp_cyber():
+#     return wmdp_task("wmdp-cyber")
 
 
