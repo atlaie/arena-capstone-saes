@@ -13,7 +13,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Load the model and tokenizer
 model = HookedTransformer.from_pretrained("google/gemma-2-2b-it", device=device)
 tokenizer = AutoTokenizer.from_pretrained('google/gemma-2-2b-it')
-
+#%%
 # Load the SAE
 sae, cfg_dict, sparsity = SAE.from_pretrained(
     release="gemma-scope-2b-pt-mlp",
@@ -21,6 +21,14 @@ sae, cfg_dict, sparsity = SAE.from_pretrained(
     device=device
 )
 
+#%%
+w_in = model.W_in[24].clone()
+w_gate = model.W_gate[24].clone()
+w_out = model.W_out[24].clone()
+
+w_in.shape, w_gate.shape, w_out.shape
+#%%
+einops.einsum(sae.W_enc[:,[10, 20, 32]], sae.W_dec[[10, 20, 32],:], 'd_model d_sae, d_sae d_model -> d_model').shape
 #%%
 from torch.utils.data import DataLoader
 
@@ -98,7 +106,7 @@ data_collator = DataCollatorForSeq2Seq(
 )
 
 # Define the subset size
-subset_size = len(tokenized_dataset_train)  # Adjust this number as needed
+subset_size = 64#len(tokenized_dataset_train)  # Adjust this number as needed
 
 # Select a subset of the dataset
 subset_dataset = tokenized_dataset_train.select(range(subset_size))
@@ -340,17 +348,28 @@ def identify_neurons_from_sae(sae, idx_order, top_k = 20, percentile = 99):
 # Function to ablate the most important neurons in the model by zeroing out their downstream weights
 def ablate_neurons_in_model(model, important_neurons, layer):
     with torch.no_grad():
+        #for layer in layers:
         # Get a copy of the down_proj weights (this will avoid in-place modifications)
         down_proj_weights = model.model.layers[layer].mlp.down_proj.weight.clone()
-        
         # Zero out the rows corresponding to the important neurons
-        down_proj_weights[important_neurons, :] = 0.0
+        down_proj_weights[:, important_neurons] = 0.0
         
         # Assign the modified weight back to the model
         model.model.layers[layer].mlp.down_proj.weight = torch.nn.Parameter(down_proj_weights)
 
     return model
 
+#%%
+sae.W_dec.shape, model_transformers.model.layers[24].mlp.down_proj.weight.shape
+
+#%%
+w_down = model_transformers.model.layers[24].mlp.down_proj.weight
+#w_outt = model_transformers.model.layers[24]#.post_feedforward_layernorm()#.weights
+
+v_steer = einops.einsum(sae.W_enc[:,[10, 20, 32]], sae.W_dec[[10, 20, 32],:], 'd_model d_sae, d_sae d_model -> d_model')
+
+v_final = w_down - v_steer
+#v_steer.shape, w_outt.shape
 
 #%%
 #weights_1 = model_transformers.model.layers[-1].mlp.down_proj.weight
@@ -358,6 +377,14 @@ def ablate_neurons_in_model(model, important_neurons, layer):
 layer = 24
 important_neurons = identify_neurons_from_sae(sae, idx_order, top_k = 50, percentile=95)
 important_neurons_random = np.random.choice(important_neurons.shape[0], size = important_neurons.shape[0], replace = False)
+#%%
+
+model_ablated_3 = ablate_neurons_in_model(model_transformers, np.arange(model.cfg.d_mlp), layers = np.arange(25))
+
+#%%
+
+plt.plot(model_ablated_2.model.layers[24].mlp.down_proj.weight.detach().cpu().numpy())
+#%%
 model_ablated = ablate_neurons_in_model(model_transformers, important_neurons, layer = layer)
 model_ablated_random = ablate_neurons_in_model(model_transformers, important_neurons_random, layer = layer)
 #weights_ablated = model_ablated.model.layers[-1].mlp.down_proj.weight
@@ -405,7 +432,7 @@ plt.tight_layout()
 #%%
 
 #%%
-model_ablated.save_pretrained("gemma-2-2b-it-wmdp-target_ablated")
-model_ablated_random.save_pretrained("gemma-2-2b-it-wmdp-random_ablated")
+model_ablated_3.save_pretrained("gemma-2-2b-it-wmdp-allMLPs_ablated")
+#model_ablated_random.save_pretrained("gemma-2-2b-it-wmdp-random_ablated")
 
 # %%
