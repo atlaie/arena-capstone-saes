@@ -96,20 +96,19 @@ def custom_collate_fn(batch):
     return {'input_ids': input_ids, 'attention_mask': attention_mask, 'labels': labels}
 
 # Define the subset size
-subset_size = 16#len(tokenized_dataset_train)  # Adjust this number as needed
+subset_size = 32#len(tokenized_dataset_train)  # Adjust this number as needed
 
 # Select a subset of the dataset
 subset_dataset = tokenized_dataset_train.select(range(subset_size))
 
 # Create DataLoader
-batch_size = 8
+batch_size = 16
 train_dataloader = DataLoader(
     subset_dataset,
     batch_size=batch_size,
     shuffle=False,
     collate_fn=custom_collate_fn
 )
-
 #%%
 
 def compute_errors(sae_in, feature_acts):
@@ -429,7 +428,7 @@ def evaluate_model_all_conditions(
 
 
 # Run evaluation for all conditions
-feature_idx = idx_order[:20]  # We select the relevant features by their DLA.
+feature_idx = idx_order[:2]  # We select the relevant features by their DLA.
 
 accuracy_baseline, accuracy_steering, accuracy_random_steering = evaluate_model_all_conditions(
     model=model,
@@ -437,6 +436,6 @@ accuracy_baseline, accuracy_steering, accuracy_random_steering = evaluate_model_
     feature_idx=feature_idx,
     dataloader=train_dataloader,
     device=device,
-    steering_strength=2.0,  # Adjust steering strength as needed
-    max_new_tokens=5        # Adjust the number of new tokens to generate as needed
+    steering_strength = 10.0,  # Adjust steering strength as needed
+    max_new_tokens = 5        # Adjust the number of new tokens to generate as needed
 )
